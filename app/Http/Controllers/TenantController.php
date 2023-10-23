@@ -8,6 +8,8 @@ use Illuminate\Http\JsonResponse;
 use App\DataTables\TenantDataTable;
 use App\Http\Requests\StoreTenantRequest;
 use App\Models\Tenant;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\View\View;
 
 class TenantController extends Controller
@@ -15,24 +17,36 @@ class TenantController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(TenantDataTable $tenantDataTable) : JsonResponse | View
+    public function index(TenantDataTable $tenantDataTable): JsonResponse | View
     {
         return $tenantDataTable->render('tenant.index');
     }
 
+    public function showAllTenant(): JsonResponse | View
+    {
+        $tenants = Tenant::all();  // Assuming you have a Tenant model
+
+        return response()->json($tenants);
+    }
 
     /**
      *
      * Show the form for creating a new resource.
      */
+    public function create()
+    {
+
+        return view('tenant.create');
+    }
     /**
      * Store a newly created resource in storage.
      */
     public function store(StoreTenantRequest $storeTenantRequest)
     {
-        Tenant::create($storeTenantRequest->validated());
+        // Tenant::create($storeTenantRequest->validated());
 
-        return redirect()->route('tenant.index');
+        // return redirect()->route('tenant.index');
+
     }
 
     /**
@@ -50,9 +64,9 @@ class TenantController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(StoreTenantRequest $request, Tenant $tenants)
+    public function update(StoreTenantRequest $request, Tenant $tenant): RedirectResponse
     {
-        $tenants->update($request->validated());
+        $tenant->update($request->validated());
 
         return redirect()->route('tenant.index');
     }
@@ -60,9 +74,9 @@ class TenantController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Tenant $tenants)
+    public function destroy(Tenant $tenant): RedirectResponse
     {
-        $tenants->delete();
+        $tenant->delete();
 
         return redirect()->route('tenant.index');
     }

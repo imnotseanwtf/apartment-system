@@ -23,16 +23,19 @@ class ApartmentDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->setRowId('id')
-            ->addColumn('actions' , fn(Apartment $apartment) => view('apartment.components.action' , compact('apartment')))
+            ->addColumn('actions', function (Apartment $apartment) {
+                return view('apartment.components.action', compact('apartment'));
+            })
             ->rawColumns(['actions']);
     }
 
     /**
      * Get the query source of dataTable.
      */
+
     public function query(Apartment $model): QueryBuilder
     {
-        return $model->newQuery();
+        return $model->newQuery();;
     }
 
     /**
@@ -41,20 +44,20 @@ class ApartmentDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('apartment_dataTable')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    //->dom('Bfrtip')
-                    ->orderBy(1)
-                    ->selectStyleSingle()
-                    ->buttons([
-                        Button::make('excel'),
-                        Button::make('csv'),
-                        Button::make('pdf'),
-                        Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload')
-                    ]);
+            ->setTableId('apartment_dataTable')
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            //->dom('Bfrtip')
+            ->orderBy(1)
+            ->selectStyleSingle()
+            ->buttons([
+                Button::make('excel'),
+                Button::make('csv'),
+                Button::make('pdf'),
+                Button::make('print'),
+                Button::make('reset'),
+                Button::make('reload')
+            ]);
     }
 
     /**
@@ -68,9 +71,9 @@ class ApartmentDataTable extends DataTable
             Column::make('address'),
             Column::make('base_price'),
             Column::make('actions')
-            ->searchable(false)
-            ->printable(false)
-            ->orderable(false)
+                ->searchable(false)
+                ->printable(false)
+                ->orderable(false)
         ];
     }
 

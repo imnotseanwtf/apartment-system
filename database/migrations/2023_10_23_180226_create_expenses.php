@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Apartment;
+use App\Models\LivedIn;
 use App\Models\Tenant;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -13,14 +14,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('lived_ins', function (Blueprint $table) {
+        Schema::create('expenses', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Tenant::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(Apartment::class)->constrained()->cascadeOnDelete();
-            $table->double('balance');
-            $table->double('advance_deposit');
-            $table->dateTime('start_date');
-            $table->dateTime('end_date')->nullable();
+            $table->string('Bills');
+            $table->foreignIdFor(LivedIn::class)->constrained()->cascadeOnDelete();
+            $table->double('price');
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('moved_ins');
+        Schema::dropIfExists('expenses');
     }
 };

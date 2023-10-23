@@ -18,6 +18,9 @@ return new class extends Migration
             $table->string('name');
             $table->string('address');
             $table->double('base_price');
+            $table->double('security_deposit');
+            $table->double('advance_electricity');
+            $table->double('advance_water');
             $table->text('description');
             $table->string('picture')->nullable();
             $table->timestamps();

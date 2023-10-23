@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use App\Models\Tenant;
+use App\Models\Expense;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class LivedIn extends Model
 {
@@ -13,12 +15,13 @@ class LivedIn extends Model
 
     protected $fillable = [
         'tenant_id',
+        'advance_deposit',
         'apartment_id',
         'start_date',
         'end_date',
     ];
 
-    public function tenant(): BelongsTo
+    public function tenants()
     {
         return $this->belongsTo(Tenant::class);
     }
@@ -26,5 +29,10 @@ class LivedIn extends Model
     public function apartment(): BelongsTo
     {
         return $this->belongsTo(Apartment::class);
+    }
+
+    public function expenses(): HasMany
+    {
+        return $this->hasMany(Expense::class);
     }
 }

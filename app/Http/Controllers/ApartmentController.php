@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\DataTables\ApartmentDataTable;
-use App\Http\Requests\StoreApartmentRequest;
+use App\Models\Tenant;
 use App\Models\Apartment;
 use Illuminate\View\View;
 use App\Models\Apartments;
-use Illuminate\Database\Eloquent\Casts\Json;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use App\DataTables\ApartmentDataTable;
+use App\Http\Requests\StoreApartmentRequest;
+use Illuminate\Database\Eloquent\Casts\Json;
 
 class ApartmentController extends Controller
 {
@@ -21,10 +22,8 @@ class ApartmentController extends Controller
         return $dataTable->render('apartment.index');
     }
 
-    /**
-     * Show the form for creating a new resource.e
-     */
-    public function create()
+
+    public function addTenant()
     {
 
     }

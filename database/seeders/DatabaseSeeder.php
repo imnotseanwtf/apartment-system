@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
             TenantSeeder::class,
             ApartmentSeeder::class,
             LivedInSeeder::class,
-            ExpenseSeeder::class
+            ExpenseSeeder::class,
         ]);
     }
 }

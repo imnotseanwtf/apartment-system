@@ -23,8 +23,9 @@ class TenantDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->setRowId('id')
+            ->addColumn('picture', fn (Tenant $tenant) => '<img src="' . asset('images/brand/download.png') . '" height="50" width="50"/>')
             ->addColumn('actions' , fn(Tenant $tenant) => view('tenant.components.action' , compact('tenant')))
-            ->rawColumns(['actions']);
+            ->rawColumns(['actions' , 'picture']);
     }
 
     /**
@@ -44,7 +45,7 @@ class TenantDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('tenant-dataTable')
+                    ->setTableId('tenant_dataTable')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')
@@ -66,7 +67,10 @@ class TenantDataTable extends DataTable
     public function getColumns(): array
     {
         return [
+            Column::make('picture'),
             Column::make('name'),
+            Column::make('occupation'),
+            Column::make('number'),
             Column::make('lived_in.apartment.name', 'livedIn.apartment.name'),
             Column::make('actions')
             ->searchable(false)

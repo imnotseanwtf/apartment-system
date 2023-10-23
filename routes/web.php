@@ -31,7 +31,11 @@ Route::middleware('auth')->group(function () {
     Route::get('profile', [\App\Http\Controllers\ProfileController::class, 'show'])->name('profile.show');
     Route::put('profile', [\App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
 
+
     Route::resource('apartment', ApartmentController::class);
+    // Route::store('apartment/{tenant}/addtenant' , [ApartmentController::class , 'addTenant'])->name('apartment.addTenant');
 
     Route::resource('tenant', TenantController::class);
+
+    Route::get('api/tenant/', [TenantController::class, 'showAllTenant']);
 });

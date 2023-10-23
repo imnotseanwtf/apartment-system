@@ -3,6 +3,8 @@
 namespace Database\Factories;
 
 use App\Models\Apartment;
+use App\Models\Expense;
+use App\Models\LivedIn;
 use App\Models\Tenant;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -18,10 +20,11 @@ class ExpenseFactory extends Factory
      */
     public function definition(): array
     {
+        $billsArray = ['Electricity', 'Water' , 'Others'];
+
         return [
-            'tenant_id' => Tenant::inRandomOrder()->value('id'),
-            'apartment_id' => Apartment::inRandomOrder()->value('id'),
-            'description' => fake()->paragraph(2),
+            'lived_in_id' => LivedIn::inRandomOrder()->value('id'),
+            'Bills' => $billsArray[array_rand($billsArray)] ,
             'price' => fake()->randomNumber(),
         ];
     }

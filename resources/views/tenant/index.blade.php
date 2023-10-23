@@ -4,23 +4,19 @@
     <div class="container-fluid">
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <div>Manage Categories</div>
-                <button class="btn btn-primary" data-bs-target="#createModal" data-bs-toggle="modal">New Tenant
-                </button>
+                <div>Tenants</div>
+                <a href="tenant/create" class="btn btn-primary">New Tenant</a>
             </div>
             <div class="card card-body border-0 shadow table-wrapper table-responsive">
                 {{ $dataTable->table() }}
             </div>
         </div>
-
-
         <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModal"
             aria-hidden="true">
-            <div class="modal-dialog modal-md" role="document">
+            <div class="modal-dialog modal-xl" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Create</h5>
-
+                        <h5 class="modal-title" id="exampleModalLabel">New Tenant</h5>
                         <button type="button" data-bs-dismiss="modal" aria-label="Close" class="btn">
                             <i class="fa-solid fa-xmark"></i>
                         </button>
@@ -28,57 +24,71 @@
                     <form action="{{ route('tenant.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="modal-body">
-                            <div class="form-group">
-                                <label for="name">{{ __('Name') }}</label>
-                                <div class="input-group">
-                                    <input name="name" type="text" @class(['form-control', 'is-invalid' => $errors->has('name')])
-                                        placeholder="{{ __('Name') }}" value="{{ old('name') }}" autofocus>
-                                </div>
-                                @error('name')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <!-- Name -->
+                                    <div class="form-group">
+                                        <label for="name">{{ __('Name') }}</label>
+                                        <div class="input-group">
+                                            <input name="name" type="text" @class(['form-control', 'is-invalid' => $errors->has('name')])
+                                                placeholder="{{ __('Name') }}" value="{{ old('name') }}" autofocus>
+                                        </div>
+                                        @error('name')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
 
-                            <div class="form-group mt-3">
-                                <label for="name">{{ __('Picture') }}</label>
-                                <div class="input-group">
-                                    <input name="picture" type="file" @class(['form-control', 'is-invalid' => $errors->has('picture')])
-                                        placeholder="{{ __('picture') }}" value="{{ old('picture') }}" autofocus>
+                                    <!-- Picture -->
+                                    <div class="form-group mt-3">
+                                        <label for="name">{{ __('Picture') }}</label>
+                                        <div class="input-group">
+                                            <input name="picture" type="file" @class(['form-control', 'is-invalid' => $errors->has('picture')])
+                                                placeholder="{{ __('picture') }}" value="{{ old('picture') }}" autofocus>
+                                        </div>
+                                        @error('picture')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
                                 </div>
-                                @error('picture')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
 
-                            <div class="form-group mt-3">
-                                <label for="name">{{ __('Occupation') }}</label>
-                                <div class="input-group">
-                                    <input name="occupation" type="text" @class(['form-control', 'is-invalid' => $errors->has('occupation')])
-                                        placeholder="{{ __('occupation') }}" value="{{ old('occupation') }}" autofocus>
+                                <div class="col">
+                                    <!-- Occupation -->
+                                    <div class="form-group">
+                                        <label for="name">{{ __('Occupation') }}</label>
+                                        <div class="input-group">
+                                            <input name="occupation" type="text" @class(['form-control', 'is-invalid' => $errors->has('occupation')])
+                                                placeholder="{{ __('occupation') }}" value="{{ old('occupation') }}"
+                                                autofocus>
+                                        </div>
+                                        @error('occupation')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+                                    <!-- Number -->
+                                    <div class="form-group mt-3">
+                                        <label for="name">{{ __('No.') }}</label>
+                                        <div class="input-group">
+                                            <input name="number" type="number" @class(['form-control', 'is-invalid' => $errors->has('number')])
+                                                placeholder="{{ __('No.') }}" value="{{ old('number') }}" autofocus>
+                                        </div>
+                                        @error('number')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+                                    <!-- Email -->
+                                    <div class="form-group mt-3 mb-3">
+                                        <label for="name">{{ __('Email') }}</label>
+                                        <div class="input-group">
+                                            <input name="email" type="text" @class(['form-control', 'is-invalid' => $errors->has('email')])
+                                                placeholder="{{ __('Email') }}" value="{{ old('email') }}" autofocus>
+                                        </div>
+                                        @error('email')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
                                 </div>
-                                @error('occupation')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="form-group mt-3">
-                                <label for="name">{{ __('No.') }}</label>
-                                <div class="input-group">
-                                    <input name="number" type="number" @class(['form-control', 'is-invalid' => $errors->has('number')])
-                                        placeholder="{{ __('No.') }}" value="{{ old('number') }}" autofocus>
-                                </div>
-                                @error('number')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="form-group mt-3">
-                                <label for="name">{{ __('Email') }}</label>
-                                <div class="input-group">
-                                    <input name="email" type="text" @class(['form-control', 'is-invalid' => $errors->has('email')])
-                                        placeholder="{{ __('Email') }}" value="{{ old('email') }}" autofocus>
-                                </div>
-                                @error('email')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
                             </div>
 
                             <div class="modal-footer">
@@ -90,6 +100,7 @@
                 </div>
             </div>
         </div>
+
 
         <div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="viewModalLabel"
             aria-hidden="true">
@@ -204,7 +215,7 @@
                             </div>
 
                             <div class="form-group mt-3">
-                                <label for="name">{{ __('occupation') }}</label>
+                                <label for="name">{{ __('Occupation') }}</label>
                                 <div class="input-group">
                                     <input name="occupation" type="text" @class(['form-control', 'is-invalid' => $errors->has('occupation')])
                                         placeholder="{{ __('occupation') }}" value="{{ old('occupation') }}" autofocus
@@ -258,6 +269,7 @@
                 .DataTable()
             tableInstance.on('draw.dt', function() {
                 $('.viewBtn').click(function() {
+                    console.log('btn click');
                     fetch('/tenant/' + $(this).data('tenant'))
                         .then(response => response.json())
                         .then(tenant => {
