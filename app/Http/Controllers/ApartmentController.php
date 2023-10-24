@@ -9,7 +9,8 @@ use App\Models\Apartments;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\DataTables\ApartmentDataTable;
-use App\Http\Requests\StoreApartmentRequest;
+use App\Http\Requests\Apartment\StoreApartmentRequest;
+use App\Http\Requests\Apartment\UpdateApartmentRequest;
 use Illuminate\Database\Eloquent\Casts\Json;
 
 class ApartmentController extends Controller
@@ -19,13 +20,9 @@ class ApartmentController extends Controller
      */
     public function index(ApartmentDataTable $dataTable): JsonResponse | View
     {
-        return $dataTable->render('apartment.index');
-    }
-
-
-    public function addTenant()
-    {
-
+        return $dataTable->render('apartment.index', [
+            'tenants' => Tenant::all(),
+        ]);
     }
 
     /**
@@ -33,8 +30,11 @@ class ApartmentController extends Controller
      */
     public function store(StoreApartmentRequest $request)
     {
-        Apartment::create($request->validated());
+        Apartment::create($request->except('picture') + [
+            'picture' => $request->file('picture')->store('apartments', 'public')
+        ]);
 
+        alert()->success('Apartment created successfully.');
         return redirect()->route('apartment.index');
     }
 
@@ -47,19 +47,19 @@ class ApartmentController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Apartment $apartment)
-    {
-    }
-
-    /**
      * Update the specified resource in storage.
      */
-    public function update(StoreApartmentRequest $request, Apartment $apartment)
+    public function update(UpdateApartmentRequest $request, Apartment $apartment)
     {
-        $apartment->update($request->validated());
+        if ($request->hasFile('picture')) {
+            unlink(storage_path('app/public/'. $apartment->picture));
+        }
 
+        $apartment->update($request->except('picture') + [
+            'picture' => $request->hasFile('picture') ? $request->file('picture')->store('avatars', 'public') : $apartment->picture,
+        ]);
+
+        alert()->success('Apartment updated successfully.');
         return redirect()->route('apartment.index');
     }
 
@@ -70,6 +70,7 @@ class ApartmentController extends Controller
     {
         $apartment->delete();
 
+        alert()->success('Apartment deleted successfully.');
         return redirect()->route('apartment.index');
     }
 }

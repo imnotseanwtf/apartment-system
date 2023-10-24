@@ -15,7 +15,6 @@ class LivedIn extends Model
 
     protected $fillable = [
         'tenant_id',
-        'advance_deposit',
         'apartment_id',
         'start_date',
         'end_date',

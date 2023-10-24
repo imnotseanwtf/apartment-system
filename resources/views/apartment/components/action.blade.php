@@ -18,6 +18,7 @@
         data-apartment="{{ $apartment->id }}">
         <i class="fa-solid fa-trash"></i>
     </button>
+
     <button class="btn btn-success addTenantBtn" data-bs-toggle="modal" data-bs-target="#addTenantModal"
         data-apartment="{{ $apartment->id }}">
         <i class="fa-solid fa-plus"></i>

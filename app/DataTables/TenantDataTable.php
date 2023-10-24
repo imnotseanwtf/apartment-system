@@ -23,8 +23,9 @@ class TenantDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->setRowId('id')
-            ->addColumn('picture', fn (Tenant $tenant) => '<img src="' . asset('images/brand/download.png') . '" height="50" width="50"/>')
+            ->addColumn('picture', fn (Tenant $tenant) => '<img src="storage/' . $tenant->picture . '" height="50" width="50"/>')
             ->addColumn('actions' , fn(Tenant $tenant) => view('tenant.components.action' , compact('tenant')))
+            ->editColumn('lived_in.apartment.name', fn (Tenant $tenant) => $tenant->livedIn?->apartment?->name ?? 'No Occupied Apartment')
             ->rawColumns(['actions' , 'picture']);
     }
 

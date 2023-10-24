@@ -6,7 +6,8 @@ use App\Models\tenants;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\DataTables\TenantDataTable;
-use App\Http\Requests\StoreTenantRequest;
+use App\Http\Requests\Tenant\StoreTenantRequest;
+use App\Http\Requests\Tenant\UpdateTenantRequest;
 use App\Models\Tenant;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redis;
@@ -30,22 +31,16 @@ class TenantController extends Controller
     }
 
     /**
-     *
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-
-        return view('tenant.create');
-    }
-    /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreTenantRequest $storeTenantRequest)
+    public function store(StoreTenantRequest $request)
     {
-        // Tenant::create($storeTenantRequest->validated());
+        Tenant::create($request->except('picture') + [
+            'picture' => $request->file('picture')->store('avatars', 'public')
+        ]);
 
-        // return redirect()->route('tenant.index');
+        alert()->success('Tenant created successfully.');
+        return redirect()->route('tenant.index');
 
     }
 
@@ -58,16 +53,23 @@ class TenantController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified resource.d
      */
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(StoreTenantRequest $request, Tenant $tenant): RedirectResponse
+    public function update(UpdateTenantRequest $request, Tenant $tenant): RedirectResponse
     {
-        $tenant->update($request->validated());
+        if ($request->hasFile('picture')) {
+            unlink(storage_path('app/public/'. $tenant->picture));
+        }
 
+        $tenant->update($request->except('picture') + [
+            'picture' => $request->hasFile('picture') ? $request->file('picture')->store('avatars', 'public') : $tenant->picture,
+        ]);
+
+        alert()->success('Tenant updated successfully.');
         return redirect()->route('tenant.index');
     }
 
@@ -78,6 +80,7 @@ class TenantController extends Controller
     {
         $tenant->delete();
 
+        alert()->success('Tenant deleted successfully.');
         return redirect()->route('tenant.index');
     }
 }

@@ -1,11 +1,12 @@
 @extends('layouts.app')
 
+
 @section('content')
     <div class="container-fluid">
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <div>Apartments</div>
-                <button class="btn btn-primary" data-bs-target="#createModal" data-bs-toggle="modal">Create apartment
+                <button class="btn btn-primary" data-bs-target="#createModal" data-bs-toggle="modal">Create Apartment
                 </button>
             </div>
             <div class="card card-body border-0 shadow table-wrapper table-responsive">
@@ -41,27 +42,16 @@
 
 
                             <div class="form-group mt-3">
-                                <label for="name">{{ __('Icon') }}</label>
+                                <label for="name">{{ __('Picture') }}</label>
                                 <div class="input-group">
-                                    <input name="icon" type="file" @class(['form-control', 'is-invalid' => $errors->has('icon')])
-                                        placeholder="{{ __('Icon') }}" value="{{ old('icon') }}" autofocus>
+                                    <input name="picture" type="file" @class(['form-control', 'is-invalid' => $errors->has('picture')])
+                                        placeholder="{{ __('Picture') }}" value="{{ old('icon') }}" autofocus>
                                 </div>
-                                @error('icon')
+                                @error('picture')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
 
-                            {{-- <div class="form-group mt-3">
-                                <label>{{ __('Priority Level') }}</label>
-                                <select class="form-select" name="base_priority_level">
-                                    @for ($i = 1; $i <= 5; $i++)
-                                        <option value="{{ $i }}">{{ $i }}</option>
-                                    @endfor
-                                </select>
-                                @error('email')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div> --}}
                             <div class="form-group mt-3">
                                 <label for="name">{{ __('Address') }}</label>
                                 <div class="input-group">
@@ -72,16 +62,33 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
+
                             <div class="form-group mt-3">
                                 <label for="name">{{ __('Base Price') }}</label>
                                 <div class="input-group">
                                     <input name="base_price" type="number" @class(['form-control', 'is-invalid' => $errors->has('base_price')])
-                                        placeholder="{{ __('base_price') }}" value="{{ old('base_price') }}" autofocus>
+                                        placeholder="{{ __('Base Price') }}" value="{{ old('base_price') }}" autofocus>
                                 </div>
                                 @error('base_price')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
+
+                            <div class="form-group mt-3">
+                                <label for="name">{{ __('Security Deposit') }}</label>
+                                <div class="input-group">
+                                    <input name="security_deposit" type="number" @class([
+                                        'form-control',
+                                        'is-invalid' => $errors->has('security_deposit'),
+                                    ])
+                                        placeholder="{{ __('Security Deposit') }}" value="{{ old('security_deposit') }}"
+                                        autofocus>
+                                </div>
+                                @error('security_deposit')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
                             <div class="form-group mt-3">
                                 <label for="name">{{ __('Description') }}</label>
                                 <div class="input-group">
@@ -92,22 +99,6 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-
-
-
-                            {{-- <div class="mt-3 form-group">
-                                <label class="col-12">{{ __('Parent apartment') }}</label>
-                                <select class="form-control col-12" name="parent_id">
-                                    <option value="" selected>Select apartment</option>
-                                    @foreach ($categories as $apartment)
-                                        <option value="{{ $apartment->id }}"> {{ $apartment->name }} </option>
-                                    @endforeach
-                                </select>
-                                @error('parent_id')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div> --}}
-
 
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -228,16 +219,16 @@
                                 @enderror
                             </div>
 
-                            {{-- <div class="form-group mt-3">
-                                <label for="name">{{ __('Icon') }}</label>
+                            <div class="form-group mt-3">
+                                <label for="name">{{ __('Picture') }}</label>
                                 <div class="input-group">
-                                    <input name="icon" type="file" @class(['form-control', 'is-invalid' => $errors->has('icon')])
-                                        placeholder="{{ __('Icon') }}" value="{{ old('icon') }}" autofocus>
+                                    <input name="picture" type="file" @class(['form-control', 'is-invalid' => $errors->has('picture')])
+                                        placeholder="{{ __('Picture') }}" value="{{ old('picture') }}" autofocus>
                                 </div>
-                                @error('icon')
+                                @error('picture')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
-                            </div> --}}
+                            </div>
 
                             <div class="form-group mt-3">
                                 <label for="name">{{ __('Address') }}</label>
@@ -250,6 +241,7 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
+
                             <div class="form-group mt-3">
                                 <label for="name">{{ __('Base Price') }}</label>
                                 <div class="input-group">
@@ -261,6 +253,22 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
+
+                            <div class="form-group mt-3">
+                                <label for="name">{{ __('Security Deposit') }}</label>
+                                <div class="input-group">
+                                    <input name="security_deposit" type="number" @class([
+                                        'form-control',
+                                        'is-invalid' => $errors->has('security_deposit'),
+                                    ])
+                                        placeholder="{{ __('Security Deposit') }}" value="{{ old('security_deposit') }}"
+                                        autofocus id="edit_security_deposit">
+                                </div>
+                                @error('security_deposit')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
                             <div class="form-group mt-3">
                                 <label for="name">{{ __('Description') }}</label>
                                 <div class="input-group">
@@ -284,7 +292,7 @@
         </div>
         <div class="modal fade" id="addTenantModal" tabindex="-1" role="dialog" aria-labelledby="addTenantModal"
             aria-hidden="true">
-            <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-dialog modal-md" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="apartment_name"></h5>
@@ -293,78 +301,52 @@
                             <i class="fa-solid fa-xmark"></i>
                         </button>
                     </div>
-                    <form action="" method="POST" enctype="multipart/form-data">
+                    <form action="" method="POST" enctype="multipart/form-data" id="addTenantForm">
                         @csrf
                         <div class="modal-body">
                             <div class="row">
-                                <div class="col-6">
-                                    <div class="form-group">
-                                        <label for="tenants">Tenants</label>
-                                        <div class="input-group">
-                                            <select name="tenants_id" id="tenants" class="select2 form-control">
-                                                <!-- Options will be dynamically added here using JavaScript -->
-                                            </select>
-                                        </div>
-                                        @error('tenants')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                <div class="form-group">
+                                    <label for="tenants">Tenant</label>
+                                    <div class="input-group">
+                                        <select name="tenant_id" id="tenants" class="select2 form-control">
+                                            @foreach ($tenants as $tenant)
+                                                <option value="{{ $tenant->id }}">{{ $tenant->name }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
-
-                                    <div class="form-group mt-3">
-                                        <label for="balance">Over All</label>
-                                        <div id="apartment_base_price"></div>
-                                        <div id="security_deposit"></div>
-                                        <div id="advance_electricity_price"></div>
-                                        <div id="advance_water_price"></div>
-                                        <div id="total"></div>
-                                        <hr>
-                                        <div id="balance" class="input-group">0.00</div>
-                                    </div>
-
+                                    @error('tenant_id')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
-                                <div class="col-6">
-                                    <div class="form-group">
-                                        <label for="Deposit">{{ __('Advance / Deposit') }}</label>
-                                        <div class="input-group">
-                                            <input name="advance_deposit" type="number" @class([
-                                                'form-control',
-                                                'is-invalid' => $errors->has('advance_deposit'),
-                                            ])
-                                                placeholder="{{ __('Deposit') }}" value="{{ old('advance_deposit') }}"
-                                                autofocus id="advance_deposit">
-                                        </div>
-                                        @error('advance_deposit')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-
+                                {{-- <div class="form-group mt-3">
+                                    <label for="Deposit">{{ __('Advance / Deposit') }}</label>
+                                    <div class="input-group">
+                                        <input name="advance_deposit" type="number" @class([
+                                            'form-control',
+                                            'is-invalid' => $errors->has('advance_deposit'),
+                                        ])
+                                            placeholder="{{ __('Deposit') }}" value="{{ old('advance_deposit') }}"
+                                            autofocus id="advance_deposit">
                                     </div>
+                                    @error('advance_deposit')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div> --}}
 
-                                    <div class="form-group mt-3">
-                                        <label for="tenant_paid">{{ __('Electricity') }}</label>
-                                        <div class="input-group">
-                                            <input name="tenant_paid" type="number" @class(['form-control', 'is-invalid' => $errors->has('tenant_paid')])
-                                                placeholder="{{ __('Paid') }}" value="{{ old('tenant_paid') }}"
-                                                id="electricity_paid" autofocus>
-                                        </div>
-                                        @error('tenant_paid')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
+                                <div class="form-group mt-3 mb-3">
+                                    <label for="date">{{ __('Moved In Date') }}</label>
+                                    <div class="input-group">
+                                        <input name="start_date" type="date" @class(['form-control', 'is-invalid' => $errors->has('start_date')])
+                                            placeholder="{{ __('Date') }}" value="{{ old('start_date') }}" autofocus
+                                            id="date">
                                     </div>
-
-                                    <div class="form-group mt-3">
-                                        <label for="tenant_paid">{{ __('Water') }}</label>
-                                        <div class="input-group">
-                                            <input name="tenant_paid" type="number" @class(['form-control', 'is-invalid' => $errors->has('tenant_paid')])
-                                                placeholder="{{ __('Paid') }}" value="{{ old('tenant_paid') }}"
-                                                id="water_paid" autofocus>
-                                        </div>
-                                        @error('tenant_paid')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-
+                                    @error('start_date')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
+
+
 
 
                                 <div class="modal-footer">
@@ -409,6 +391,7 @@
                         .then(apartment => {
                             $('#edit_name').val(apartment.name)
                             $('#edit_price').val(apartment.base_price)
+                            $('#edit_security_deposit').val(apartment.security_deposit);
                             $('#edit_description').val(apartment.description)
                             $('#edit_address').val(apartment.address)
                             $('#update-form').attr('action', '/apartment/' + $(this).data(
@@ -420,90 +403,85 @@
                     $('#delete-form').attr('action', '/apartment/' + $(this).data('apartment'));
                 });
 
-                let apartmentData = {
-                    base_price: 0,
-                    security_deposit: 0,
-                    advance_electricity: 0,
-                    advance_water: 0
-                };
-
                 $('.addTenantBtn').click(function() {
-                    const apartmentId = $(this).data('apartment');
+                    $('#addTenantForm').attr('action', '/apartment/' + $(this).data(
+                        'apartment') + '/moved-in');
+                })
 
-                    // Set the action attribute of the form dynamically
-                    $('#addTenantModal form').attr('action', '/apartment/' + apartmentId +
-                        '/add-tenant');
+                // let apartmentData = {
+                //     base_price: 0,
+                //     security_deposit: 0,
+                // };
 
-                    // Fetch apartment data
-                    fetch('/apartment/' + apartmentId)
-                        .then(response => response.json())
-                        .then(apartment => {
+                // $('.addTenantBtn').click(function() {
+                //     const apartmentId = $(this).data('apartment');
 
-                            apartmentData = apartment;
+                //     // Set the action attribute of the form dynamically
+                //     $('#addTenantModal form').attr('action', '/apartment/' + apartmentId +
+                //         '/add-tenant');
 
-                            // Display the apartment data in the modal
-                            $('#apartment_name').text(apartment.name);
-                            $('#apartment_base_price').html(
-                                'Base Price:<div style="display: inline-block; float:right;"> ₱  ' +
-                                apartment.base_price + '</div>');
-                            $('#security_deposit').html(
-                                'Security Deposit:<div style="display: inline-block; float:right;"> ₱  ' +
-                                apartment.security_deposit + '</div>');
-                            $('#advance_electricity_price').html(
-                                'Advance Electricity Bill:<div style="display: inline-block; float:right;"> ₱  ' +
-                                apartment.advance_electricity + '</div>');
-                            $('#advance_water_price').html(
-                                'Advance Water Bill:<div style="display: inline-block; float:right;"> ₱  ' +
-                                apartment.advance_water + '</div>');
-                            $('#apartment_description').text(apartment.description);
-                            $('#apartment_address').text(apartment.address);
+                //     // Fetch apartment data
+                //     fetch('/apartment/' + apartmentId)
+                //         .then(response => response.json())
+                //         .then(apartment => {
 
-                            // Fetch tenants data
-                            fetch('api/tenant/')
-                                .then(response => response.json())
-                                .then(tenants => {
-                                    // Update the modal dropdown with tenant options
-                                    updateModalDropdown(tenants);
+                //             apartmentData = apartment;
 
-                                    // Show the modal
-                                    $('#addTenantModal').modal('show');
-                                })
-                                .catch(error => {
-                                    console.error('Error fetching tenants:', error);
-                                });
-                        })
-                        .catch(error => {
-                            console.error('Error fetching apartment data:', error);
-                        });
-                });
+                //             // Display the apartment data in the modal
+                //             $('#apartment_name').text(apartment.name);
+                //             $('#apartment_base_price').html(
+                //                 'Base Price:<div style="display: inline-block; float:right;"> ₱  ' +
+                //                 apartment.base_price + '</div>');
+                //             $('#security_deposit').html(
+                //                 'Security Deposit:<div style="display: inline-block; float:right;"> ₱  ' +
+                //                 apartment.security_deposit + '</div>');
+                //             $('#apartment_description').text(apartment.description);
+                //             $('#apartment_address').text(apartment.address);
 
-                function updateBalance() {
-                    const advanceDeposit = parseFloat($('#advance_deposit').val()) || 0;
-                    const electricityPaid = parseFloat($('#electricity_paid').val()) || 0;
-                    const waterPaid = parseFloat($('#water_paid').val()) || 0;
+                //             // Fetch tenants data
+                //             fetch('api/tenant/')
+                //                 .then(response => response.json())
+                //                 .then(tenants => {
+                //                     // Update the modal dropdown with tenant options
+                //                     updateModalDropdown(tenants);
 
-                    if (apartmentData) {
-                        const basePrice = parseFloat(apartmentData.base_price) || 0;
-                        const securityDeposit = parseFloat(apartmentData.security_deposit) || 0;
-                        const advanceElectricity = parseFloat(apartmentData.advance_electricity) || 0;
-                        const advanceWater = parseFloat(apartmentData.advance_water) || 0;
+                //                     // Show the modal
+                //                     $('#addTenantModal').modal('show');
+                //                 })
+                //                 .catch(error => {
+                //                     console.error('Error fetching tenants:', error);
+                //                 });
+                //         })
+                //         .catch(error => {
+                //             console.error('Error fetching apartment data:', error);
+                //         });
+                // });
 
-                        const total = basePrice + securityDeposit + advanceElectricity + advanceWater;
-                        const balance = total - advanceDeposit - electricityPaid - waterPaid;
+                // function updateBalance() {
+                //     const advanceDeposit = parseFloat($('#advance_deposit').val()) || 0;
+                //     const electricityPaid = parseFloat($('#electricity_paid').val()) || 0;
+                //     const waterPaid = parseFloat($('#water_paid').val()) || 0;
 
-                        // Display the balance in the designated div
-                        $('#total').text("Total: " + total.toFixed(2));
-                        $('#balance').text(balance.toFixed(2));
-                    }
-                }
+                //     if (apartmentData) {
+                //         const basePrice = parseFloat(apartmentData.base_price) || 0;
+                //         const securityDeposit = parseFloat(apartmentData.security_deposit) || 0;
 
-                // Event listener for input changes
-                $('#advance_deposit, #electricity_paid, #water_paid').on('input', function() {
-                    updateBalance();
-                });
+                //         const total = basePrice + securityDeposit + advanceElectricity + advanceWater;
+                //         const balance = total - advanceDeposit - electricityPaid - waterPaid;
 
-                // Optionally, you can call updateBalance on page load to initialize the balance
-                updateBalance();
+                //         // Display the balance in the designated div
+                //         $('#total').text("Total: " + total.toFixed(2));
+                //         $('#balance').text(balance.toFixed(2));
+                //     }
+                // }
+
+                // // Event listener for input changes
+                // $('#advance_deposit, #electricity_paid, #water_paid').on('input', function() {
+                //     updateBalance();
+                // });
+
+                // // Optionally, you can call updateBalance on page load to initialize the balance
+                // updateBalance();
             })
         })
     </script>

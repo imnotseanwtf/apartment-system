@@ -17,6 +17,7 @@ class Tenant extends Model
         'occupation',
         'number',
         'email',
+        'picture'
     ];
 
     public function livedIn() : HasOne

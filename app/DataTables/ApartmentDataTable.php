@@ -23,10 +23,9 @@ class ApartmentDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->setRowId('id')
-            ->addColumn('actions', function (Apartment $apartment) {
-                return view('apartment.components.action', compact('apartment'));
-            })
-            ->rawColumns(['actions']);
+            ->addColumn('actions', fn (Apartment $apartment) => view('apartment.components.action', compact('apartment')))
+            ->addColumn('picture', fn (Apartment $apartment) => '<img src="storage/' . $apartment->picture . '" height="50" width="50"/>')
+            ->rawColumns(['actions', 'picture']);
     }
 
     /**

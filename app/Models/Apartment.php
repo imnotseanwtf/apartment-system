@@ -16,6 +16,8 @@ class Apartment extends Model
         'address',
         'base_price',
         'description',
+        'security_deposit',
+        'picture',
     ];
 
     public function livedIns(): HasMany

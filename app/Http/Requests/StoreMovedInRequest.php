@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreApartmentRequest extends FormRequest
+class StoreMovedInRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,10 +22,8 @@ class StoreApartmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'=> ['required', 'string'],
-            'address' => ['required'] ,
-            'base_price' => ['required', 'numeric'],
-            'description' => ['required', 'string', 'max:255']
+            'tenant_id' => ['required', 'exists:tenants,id'],
+            'start_date' => ['required', 'date'],
         ];
     }
 }

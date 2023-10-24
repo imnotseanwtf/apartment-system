@@ -19,6 +19,7 @@
 </head>
 
 <body>
+    @include('sweetalert::alert')
     @include('layouts.nav')
     @include('layouts.sidenav')
     <main class="content">

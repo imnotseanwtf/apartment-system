@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ApartmentController;
+use App\Http\Controllers\MovedInController;
 use App\Http\Controllers\TenantController;
 use App\Models\Tenant;
 use Illuminate\Support\Facades\Auth;
@@ -31,11 +32,11 @@ Route::middleware('auth')->group(function () {
     Route::get('profile', [\App\Http\Controllers\ProfileController::class, 'show'])->name('profile.show');
     Route::put('profile', [\App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
 
-
-    Route::resource('apartment', ApartmentController::class);
-    // Route::store('apartment/{tenant}/addtenant' , [ApartmentController::class , 'addTenant'])->name('apartment.addTenant');
-
-    Route::resource('tenant', TenantController::class);
+    Route::resources([
+        'apartment' => ApartmentController::class,
+        'tenant' => TenantController::class,
+    ], ['except' => ['create', 'edit']]);
 
     Route::get('api/tenant/', [TenantController::class, 'showAllTenant']);
+    Route::post('/apartment/{apartment}/moved-in', MovedInController::class)->name('apartment.movedIn');
 });

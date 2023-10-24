@@ -5,11 +5,14 @@
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <div>Tenants</div>
-                <a href="tenant/create" class="btn btn-primary">New Tenant</a>
+
+                <button class="btn btn-primary" data-bs-target="#createModal" data-bs-toggle="modal">Create Tenant
+                </button>
             </div>
             <div class="card card-body border-0 shadow table-wrapper table-responsive">
                 {{ $dataTable->table() }}
             </div>
+
         </div>
         <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModal"
             aria-hidden="true">
@@ -38,46 +41,6 @@
                                         @enderror
                                     </div>
 
-                                    <!-- Picture -->
-                                    <div class="form-group mt-3">
-                                        <label for="name">{{ __('Picture') }}</label>
-                                        <div class="input-group">
-                                            <input name="picture" type="file" @class(['form-control', 'is-invalid' => $errors->has('picture')])
-                                                placeholder="{{ __('picture') }}" value="{{ old('picture') }}" autofocus>
-                                        </div>
-                                        @error('picture')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
-
-                                <div class="col">
-                                    <!-- Occupation -->
-                                    <div class="form-group">
-                                        <label for="name">{{ __('Occupation') }}</label>
-                                        <div class="input-group">
-                                            <input name="occupation" type="text" @class(['form-control', 'is-invalid' => $errors->has('occupation')])
-                                                placeholder="{{ __('occupation') }}" value="{{ old('occupation') }}"
-                                                autofocus>
-                                        </div>
-                                        @error('occupation')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-
-                                    <!-- Number -->
-                                    <div class="form-group mt-3">
-                                        <label for="name">{{ __('No.') }}</label>
-                                        <div class="input-group">
-                                            <input name="number" type="number" @class(['form-control', 'is-invalid' => $errors->has('number')])
-                                                placeholder="{{ __('No.') }}" value="{{ old('number') }}" autofocus>
-                                        </div>
-                                        @error('number')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-
-                                    <!-- Email -->
                                     <div class="form-group mt-3 mb-3">
                                         <label for="name">{{ __('Email') }}</label>
                                         <div class="input-group">
@@ -88,7 +51,47 @@
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
+
+                                    <div class="form-group mt-3 mb-3">
+                                        <label for="name">{{ __('Picture') }}</label>
+                                        <div class="input-group">
+                                            <input name="picture" type="file" @class(['form-control', 'is-invalid' => $errors->has('picture')])
+                                                placeholder="{{ __('picture') }}" value="{{ old('picture') }}" autofocus>
+                                        </div>
+                                        @error('picture')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
                                 </div>
+
+                                <div class="col">
+                                    <!-- Number -->
+                                    <div class="form-group">
+                                        <label for="name">{{ __('Phone Number') }}</label>
+                                        <div class="input-group">
+                                            <input name="number" type="text" @class(['form-control', 'is-invalid' => $errors->has('number')])
+                                                placeholder="{{ __('Phone Number') }}" value="{{ old('number') }}"
+                                                autofocus>
+                                        </div>
+                                        @error('number')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+                                    <div class="form-group mt-3">
+                                        <label for="name">{{ __('Occupation') }}</label>
+                                        <div class="input-group">
+                                            <input name="occupation" type="text" @class(['form-control', 'is-invalid' => $errors->has('occupation')])
+                                                placeholder="{{ __('Occupation') }}" value="{{ old('occupation') }}"
+                                                autofocus>
+                                        </div>
+                                        @error('occupation')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+
                             </div>
 
                             <div class="modal-footer">
@@ -122,7 +125,7 @@
                         </div>
 
                         <div class="form-group mt-3">
-                            <label for="name">{{ __('occupation') }}</label>
+                            <label for="name">{{ __('Occupation') }}</label>
                             <div class="input-group">
                                 <input name="occupation" type="text" id="view_occupation" @class(['form-control'])
                                     placeholder="{{ __('occupation') }}" value="{{ old('occupation') }}" readonly>
@@ -138,7 +141,7 @@
                         </div>
 
                         <div class="form-group mt-3">
-                            <label for="name">{{ __('email') }}</label>
+                            <label for="name">{{ __('Email') }}</label>
                             <div class="input-group">
                                 <input name="email" type="text" id="view_email" @class(['form-control'])
                                     placeholder="{{ __('email') }}" value="{{ old('email') }}" readonly>
@@ -204,17 +207,6 @@
                             </div>
 
                             <div class="form-group mt-3">
-                                <label for="name">{{ __('Picture') }}</label>
-                                <div class="input-group">
-                                    <input name="picture" type="file" @class(['form-control', 'is-invalid' => $errors->has('picture')])
-                                        placeholder="{{ __('Picture') }}" value="{{ old('picture') }}" autofocus>
-                                </div>
-                                @error('picture')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <div class="form-group mt-3">
                                 <label for="name">{{ __('Occupation') }}</label>
                                 <div class="input-group">
                                     <input name="occupation" type="text" @class(['form-control', 'is-invalid' => $errors->has('occupation')])
@@ -225,27 +217,42 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
+
                             <div class="form-group mt-3">
-                                <label for="name">{{ __('Number') }}</label>
+                                <label for="name">{{ __('Email') }}</label>
                                 <div class="input-group">
-                                    <input name="number" type="number" @class(['form-control', 'is-invalid' => $errors->has('number')])
-                                        placeholder="{{ __('No.') }}" value="{{ old('number') }}" autofocus
+                                    <input name="email" type="email" @class(['form-control', 'is-invalid' => $errors->has('email')])
+                                        placeholder="{{ __('Email') }}" value="{{ old('email') }}" autofocus
+                                        id="edit_email">
+                                </div>
+                                @error('email')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="form-group mt-3">
+                                <label for="number">{{ __('Phone Number') }}</label>
+                                <div class="input-group">
+                                    <input name="number" type="text" @class(['form-control', 'is-invalid' => $errors->has('number')])
+                                        placeholder="{{ __('Phone Number') }}" value="{{ old('number') }}" autofocus
                                         id="edit_number">
                                 </div>
                                 @error('number')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
+
                             <div class="form-group mt-3">
-                                <label for="name">{{ __('email') }}</label>
+                                <label for="name">{{ __('Picture') }}</label>
                                 <div class="input-group">
-                                    <textarea name="email" class="form-control" type="text" @class(['form-control', 'is-invalid' => $errors->has('email')])
-                                        placeholder="{{ __('email') }}" autofocus id="edit_email">{{ old('email') }}</textarea>
+                                    <input name="picture" type="file" @class(['form-control', 'is-invalid' => $errors->has('picture')])
+                                        placeholder="{{ __('Picture') }}" value="{{ old('picture') }}" autofocus>
                                 </div>
-                                @error('email')
+                                @error('picture')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
+
                         </div>
 
 
@@ -273,7 +280,6 @@
                     fetch('/tenant/' + $(this).data('tenant'))
                         .then(response => response.json())
                         .then(tenant => {
-                            console.log(tenant)
                             $('#view_name').val(tenant.name)
                             $('#view_number').val(tenant.number)
                             $('#view_email').val(tenant.email)

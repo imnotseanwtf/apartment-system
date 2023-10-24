@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Tenant;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreTenantRequest extends FormRequest
+class UpdateTenantRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,9 @@ class StoreTenantRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'occupation' => ['required', 'string', 'max:255'],
-            'number' => ['required', 'numeric'],
-            'email' => ['required', 'string', 'max:255']
+            'number' => ['required', 'numeric', 'unique:tenants,number,'. $this->tenant->id],
+            'email' => ['required', 'email', 'max:255', 'unique:tenants,number,'. $this->tenant->id],
+            'picture' => ['nullable', 'mimes:jpeg,bmp,png'],
         ];
     }
 }
