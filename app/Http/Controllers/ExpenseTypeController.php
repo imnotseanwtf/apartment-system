@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\DataTables\ExpenseTypeDataTable;
-use App\Http\Requests\StoreExpenseTypeRequest;
 use App\Models\Expense;
 use App\Models\LivedIn;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Contracts\View\View;
+use App\DataTables\ExpenseTypeDataTable;
+use App\Http\Requests\StoreExpenseTypeRequest;
 
 class ExpenseTypeController extends Controller
 {
@@ -42,8 +44,11 @@ class ExpenseTypeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Expense $expense)
+    public function show(Expense $expense): JsonResponse | View
     {
+
+        $expense->load('livedIn.apartment');
+
         return response()->json($expense);
     }
 
@@ -73,5 +78,7 @@ class ExpenseTypeController extends Controller
     {
         alert()->success('Bill has been removed.');
         $expense->delete();
+
+        return redirect()->route('expenses.index');
     }
 }

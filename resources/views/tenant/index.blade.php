@@ -6,7 +6,7 @@
         <div class="card-header row">
             <div class="row">
                 <div class="col">
-                    <div>Tenants</div>
+                    <div class="mt-2">Tenants</div>
                 </div>
                 <div class="col text-end">
 
@@ -301,11 +301,6 @@
                 $('.deleteBtn').click(function() {
                     $('#delete-form').attr('action', '/tenant/' + $(this).data('tenant'));
                 });
-
-                // $('.addBillBtn').click(function() {
-                //     // console.log($(this).data('livedIn'))
-                //     // $('#bill-form').attr('action', '/tenant/' + $(this).data('livedIn') + '/expense-type')
-                // })
             })
         })
     </script>

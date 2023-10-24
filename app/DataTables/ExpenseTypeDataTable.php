@@ -24,7 +24,7 @@ class ExpenseTypeDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
         ->setRowId('id')
-        ->addColumn('action', fn(Expense $expense) => view('expenseType.components.actions', compact('expense')));
+        ->addColumn('action', fn(Expense $expense) => view('expenseType.components.action', compact('expense')));
     }
 
     /**

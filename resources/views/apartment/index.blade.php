@@ -152,6 +152,15 @@
                         </div>
 
                         <div class="form-group mt-3">
+                            <label for="name">{{ __('Security Deposit') }}</label>
+                            <div class="input-group">
+                                <input name="base_price" type="text" id="view_security_deposit"
+                                    @class(['form-control']) placeholder="{{ __('Security Deposit') }}"
+                                    value="{{ old('security_deposit') }}" readonly>
+                            </div>
+                        </div>
+
+                        <div class="form-group mt-3">
                             <label for="name">{{ __('Description') }}</label>
                             <div class="input-group">
                                 <input name="description" type="text" id="view_description"
@@ -367,7 +376,6 @@
     {{ $dataTable->scripts(attributes: ['type' => 'module']) }}
     <script type="module">
         $(() => {
-            const apartmentData = {};
 
             const tableInstance = window.LaravelDataTables['apartment_dataTable'] = $('#apartment_dataTable')
                 .DataTable()
@@ -380,6 +388,7 @@
                             console.log(apartment)
                             $('#view_name').val(apartment.name)
                             $('#view_price').val(apartment.base_price)
+                            $('#view_security_deposit').val(apartment.security_deposit);
                             $('#view_description').val(apartment.description)
                             $('#view_address').val(apartment.address)
                         })
@@ -404,83 +413,10 @@
                 });
 
                 $('.addTenantBtn').click(function() {
-                    $('#addTenantForm').attr('action', '/apartment/' + $(this).data('apartment') + '/moved-in');
+                    $('#addTenantForm').attr('action', '/apartment/' + $(this).data('apartment') +
+                        '/moved-in');
                 })
 
-                // let apartmentData = {
-                //     base_price: 0,
-                //     security_deposit: 0,
-                // };
-
-                // $('.addTenantBtn').click(function() {
-                //     const apartmentId = $(this).data('apartment');
-
-                //     // Set the action attribute of the form dynamically
-                //     $('#addTenantModal form').attr('action', '/apartment/' + apartmentId +
-                //         '/add-tenant');
-
-                //     // Fetch apartment data
-                //     fetch('/apartment/' + apartmentId)
-                //         .then(response => response.json())
-                //         .then(apartment => {
-
-                //             apartmentData = apartment;
-
-                //             // Display the apartment data in the modal
-                //             $('#apartment_name').text(apartment.name);
-                //             $('#apartment_base_price').html(
-                //                 'Base Price:<div style="display: inline-block; float:right;"> ₱  ' +
-                //                 apartment.base_price + '</div>');
-                //             $('#security_deposit').html(
-                //                 'Security Deposit:<div style="display: inline-block; float:right;"> ₱  ' +
-                //                 apartment.security_deposit + '</div>');
-                //             $('#apartment_description').text(apartment.description);
-                //             $('#apartment_address').text(apartment.address);
-
-                //             // Fetch tenants data
-                //             fetch('api/tenant/')
-                //                 .then(response => response.json())
-                //                 .then(tenants => {
-                //                     // Update the modal dropdown with tenant options
-                //                     updateModalDropdown(tenants);
-
-                //                     // Show the modal
-                //                     $('#addTenantModal').modal('show');
-                //                 })
-                //                 .catch(error => {
-                //                     console.error('Error fetching tenants:', error);
-                //                 });
-                //         })
-                //         .catch(error => {
-                //             console.error('Error fetching apartment data:', error);
-                //         });
-                // });
-
-                // function updateBalance() {
-                //     const advanceDeposit = parseFloat($('#advance_deposit').val()) || 0;
-                //     const electricityPaid = parseFloat($('#electricity_paid').val()) || 0;
-                //     const waterPaid = parseFloat($('#water_paid').val()) || 0;
-
-                //     if (apartmentData) {
-                //         const basePrice = parseFloat(apartmentData.base_price) || 0;
-                //         const securityDeposit = parseFloat(apartmentData.security_deposit) || 0;
-
-                //         const total = basePrice + securityDeposit + advanceElectricity + advanceWater;
-                //         const balance = total - advanceDeposit - electricityPaid - waterPaid;
-
-                //         // Display the balance in the designated div
-                //         $('#total').text("Total: " + total.toFixed(2));
-                //         $('#balance').text(balance.toFixed(2));
-                //     }
-                // }
-
-                // // Event listener for input changes
-                // $('#advance_deposit, #electricity_paid, #water_paid').on('input', function() {
-                //     updateBalance();
-                // });
-
-                // // Optionally, you can call updateBalance on page load to initialize the balance
-                // updateBalance();
             })
         })
     </script>
