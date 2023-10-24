@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ApartmentController;
+use App\Http\Controllers\ExpenseTypeController;
 use App\Http\Controllers\MovedInController;
 use App\Http\Controllers\TenantController;
 use App\Models\Tenant;
@@ -35,6 +36,7 @@ Route::middleware('auth')->group(function () {
     Route::resources([
         'apartment' => ApartmentController::class,
         'tenant' => TenantController::class,
+        'expenses' => ExpenseTypeController::class,
     ], ['except' => ['create', 'edit']]);
 
     Route::get('api/tenant/', [TenantController::class, 'showAllTenant']);

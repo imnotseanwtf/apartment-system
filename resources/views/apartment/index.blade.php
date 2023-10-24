@@ -404,8 +404,7 @@
                 });
 
                 $('.addTenantBtn').click(function() {
-                    $('#addTenantForm').attr('action', '/apartment/' + $(this).data(
-                        'apartment') + '/moved-in');
+                    $('#addTenantForm').attr('action', '/apartment/' + $(this).data('apartment') + '/moved-in');
                 })
 
                 // let apartmentData = {

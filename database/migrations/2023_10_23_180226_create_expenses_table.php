@@ -16,7 +16,7 @@ return new class extends Migration
     {
         Schema::create('expenses', function (Blueprint $table) {
             $table->id();
-            $table->string('Bills');
+            $table->string('bills');
             $table->foreignIdFor(LivedIn::class)->constrained()->cascadeOnDelete();
             $table->double('price');
             $table->timestamps();

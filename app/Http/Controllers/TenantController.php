@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\LivedIn;
 use App\Models\tenants;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
@@ -20,7 +21,9 @@ class TenantController extends Controller
      */
     public function index(TenantDataTable $tenantDataTable): JsonResponse | View
     {
-        return $tenantDataTable->render('tenant.index');
+        $livedIns = LivedIn::with('apartment')->get();
+
+        return $tenantDataTable->render('tenant.index', compact('livedIns'));
     }
 
     public function showAllTenant(): JsonResponse | View

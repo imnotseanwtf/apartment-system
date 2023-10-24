@@ -11,18 +11,13 @@ class Expense extends Model
     use HasFactory;
 
     protected $fillable = [
-        'description',
+        'bills',
+        'lived_in_id',
         'price',
-        'tenant_id',
-        'apartment_id'
     ];
 
-    public function tenant(): BelongsTo
+    public function livedIn(): BelongsTo
     {
-        return $this->belongsTo(Tenant::class);
-    }
-    public function apartment(): BelongsTo
-    {
-        return $this->belongsTo(Apartment::class);
+        return $this->belongsTo(LivedIn::class);
     }
 }
