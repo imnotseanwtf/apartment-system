@@ -4,6 +4,7 @@ use App\Http\Controllers\ApartmentController;
 use App\Http\Controllers\ExpenseTypeController;
 use App\Http\Controllers\MovedInController;
 use App\Http\Controllers\TenantController;
+use App\Http\Controllers\UnitController;
 use App\Models\Tenant;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -37,8 +38,8 @@ Route::middleware('auth')->group(function () {
         'apartment' => ApartmentController::class,
         'tenant' => TenantController::class,
         'expenses' => ExpenseTypeController::class,
+        'unit' => UnitController::class,
     ], ['except' => ['create', 'edit']]);
 
-    Route::get('api/tenant/', [TenantController::class, 'showAllTenant']);
     Route::post('/apartment/{apartment}/moved-in', MovedInController::class)->name('apartment.movedIn');
 });

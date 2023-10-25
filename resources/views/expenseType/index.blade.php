@@ -169,6 +169,8 @@
             </div>
         </div>
 
+        {{-- DELETE MODAL --}}
+
         <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deletePromoModal"
             aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -198,7 +200,9 @@
 @endsection
 
 @push('scripts')
+
     {{ $dataTable->scripts(attributes: ['type' => 'module']) }}
+
     <script type="module">
         $(() => {
 

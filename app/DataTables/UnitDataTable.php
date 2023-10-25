@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\Apartment;
+use App\Models\Unit;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -12,7 +12,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class ApartmentDataTable extends DataTable
+class UnitDataTable extends DataTable
 {
     /**
      * Build the DataTable class.
@@ -23,18 +23,15 @@ class ApartmentDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->setRowId('id')
-            ->addColumn('actions', fn (Apartment $apartment) => view('apartment.components.action', compact('apartment')))
-            ->addColumn('picture', fn (Apartment $apartment) => '<img src="storage/' . $apartment->picture . '" height="50" width="50"/>')
-            ->rawColumns(['actions', 'picture']);
+            ->addColumn('actions', fn (Unit $unit) => view('unit.components.action', compact('unit')));
     }
 
     /**
      * Get the query source of dataTable.
      */
-
-    public function query(Apartment $model): QueryBuilder
+    public function query(Unit $model): QueryBuilder
     {
-        return $model->newQuery();;
+        return $model->newQuery();
     }
 
     /**
@@ -43,7 +40,7 @@ class ApartmentDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-            ->setTableId('apartment_dataTable')
+            ->setTableId('units-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             //->dom('Bfrtip')
@@ -65,8 +62,11 @@ class ApartmentDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('picture'),
             Column::make('name'),
+            Column::make('monthly_rent'),
+            Column::make('security_deposit'),
+            Column::make('advance_electricity'),
+            Column::make('advance_water'),
             Column::make('actions')
                 ->searchable(false)
                 ->printable(false)
@@ -79,6 +79,6 @@ class ApartmentDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Apartment_' . date('YmdHis');
+        return 'Units_' . date('YmdHis');
     }
 }

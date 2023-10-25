@@ -18,11 +18,6 @@ class ApartmentFactory extends Factory
     {
         return [
             'name' => fake()->name(),
-            'address' => fake()->address(),
-            'base_price' => fake()->numberBetween(100 , 1000),
-            'security_deposit'=> fake()->numberBetween(100,1000),
-            // 'advance_electricity'=> fake()->numberBetween(100,1000),
-            // 'advance_water'=> fake()->numberBetween(100,1000),
             'description' => fake()->paragraph(5),
         ];
     }

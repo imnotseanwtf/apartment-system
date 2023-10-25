@@ -16,9 +16,6 @@ return new class extends Migration
         Schema::create('apartments', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('address');
-            $table->double('base_price');
-            $table->double('security_deposit');
             $table->text('description');
             $table->string('picture')->nullable();
             $table->timestamps();

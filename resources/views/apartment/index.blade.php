@@ -3,6 +3,12 @@
 
 @section('content')
     <div class="container-fluid">
+        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Apartment</a></li>
+            </ol>
+        </nav>
+
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <div>Apartments</div>
