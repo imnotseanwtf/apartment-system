@@ -4,8 +4,8 @@
     <div class="container-fluid">
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Apartment</a></li>
-                <li class="breadcrumb-item"><a href="#">Unit</a></li>
+                <li class="breadcrumb-item"><a href="apartment">Apartment</a></li>
+                <li class="breadcrumb-item"><a href="">Unit</a></li>
             </ol>
         </nav>
 
@@ -113,6 +113,7 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
+                            <input type="hidden" name="apartment_id" value="{{ $id }}">
 
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -295,6 +296,61 @@
             </div>
         </div>
 
+        {{-- ADD TENANT --}}
+
+        <div class="modal fade" id="addTenantModal" tabindex="-1" role="dialog" aria-labelledby="addTenantModal"
+            aria-hidden="true">
+            <div class="modal-dialog modal-md" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="apartment_name"></h5>
+                        <button type="button" data-bs-dismiss="modal" aria-label="Close" class="btn">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+                    <form action="" method="POST" enctype="multipart/form-data" id="addTenantForm">
+                        @csrf
+                        <div class="modal-body">
+                            <div class="row">
+                                <input type="hidden" name="apartment_id" id="apartmentId">
+                                <div class="form-group">
+                                    <label for="tenants">Tenant</label>
+                                    <div class="input-group">
+                                        <select name="tenant_id" id="tenants" class="select2 form-control">
+                                            @foreach ($tenants as $tenant)
+                                                <option value="{{ $tenant->id }}">{{ $tenant->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    @error('tenant_id')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group mt-3 mb-3">
+                                    <label for="date">{{ __('Moved In Date') }}</label>
+                                    <div class="input-group">
+                                        <input name="start_date" type="date" @class(['form-control', 'is-invalid' => $errors->has('start_date')])
+                                            placeholder="{{ __('Date') }}" value="{{ old('start_date') }}" autofocus
+                                            id="date">
+                                    </div>
+                                    @error('start_date')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
         {{-- DELETE MODAL --}}
 
         <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deletePromoModal"
@@ -366,6 +422,13 @@
                 $('.deleteBtn').click(function() {
                     $('#delete-form').attr('action', '/unit/' + $(this).data('unit'));
                 });
+
+
+
+                $('.addTenantBtn').click(function() {
+                    $('#apartmentId').val($(this).data('apartment'));
+                    $('#addTenantForm').attr('action', '/apartment/' + $(this).data('unit') + '/moved-in');
+                })
             })
         })
     </script>

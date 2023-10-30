@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Unit;
+use App\Models\Tenant;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use App\DataTables\UnitDataTable;
@@ -15,10 +16,13 @@ class UnitController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(UnitDataTable $dataTable): JsonResponse | View
+    public function index(Request $request, $id)
     {
+        $dataTable = new UnitDataTable($id);
 
-        return $dataTable->render('unit.index');
+        $tenants = Tenant::all();
+
+        return $dataTable->render('unit.index', compact('id', 'tenants'));
     }
 
     /**
@@ -32,20 +36,19 @@ class UnitController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreUnitRequest $storeUnitRequest)
+    public function store(StoreUnitRequest $request)
     {
-        Unit::create($storeUnitRequest->validated());
+        $unit = Unit::create($request->validated());
 
         alert()->success('Unit has been added');
-        return redirect()->route('unit.index');
+        return redirect()->route('unit.index', ['id' => $unit['apartment_id']]);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Unit $unit): JsonResponse | View
+    public function show(Unit $unit): JsonResponse|View
     {
-
         return response()->json($unit);
     }
 
@@ -65,7 +68,7 @@ class UnitController extends Controller
         $unit->update($updateUnitRequest->validated());
 
         alert()->success('Unit has been Updated');
-        return redirect()->router('unit.index');
+        return redirect()->back();
     }
 
     /**
@@ -77,6 +80,6 @@ class UnitController extends Controller
 
         $unit->delete();
 
-        return redirect()->route('unit.index');
+        return redirect()->back();
     }
 }

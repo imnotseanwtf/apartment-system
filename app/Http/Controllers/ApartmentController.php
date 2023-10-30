@@ -18,11 +18,9 @@ class ApartmentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(ApartmentDataTable $dataTable): JsonResponse | View
+    public function index(ApartmentDataTable $dataTable): JsonResponse|View
     {
-        return $dataTable->render('apartment.index', [
-            'tenants' => Tenant::all(),
-        ]);
+        return $dataTable->render('apartment.index');
     }
 
     /**
@@ -30,9 +28,11 @@ class ApartmentController extends Controller
      */
     public function store(StoreApartmentRequest $request)
     {
-        Apartment::create($request->except('picture') + [
-            'picture' => $request->file('picture')->store('apartments', 'public')
-        ]);
+        Apartment::create(
+            $request->except('picture') + [
+                'picture' => $request->file('picture')->store('apartments', 'public'),
+            ],
+        );
 
         alert()->success('Apartment created successfully.');
         return redirect()->route('apartment.index');
@@ -52,12 +52,14 @@ class ApartmentController extends Controller
     public function update(UpdateApartmentRequest $request, Apartment $apartment)
     {
         if ($request->hasFile('picture')) {
-            unlink(storage_path('app/public/'. $apartment->picture));
+            unlink(storage_path('app/public/' . $apartment->picture));
         }
 
-        $apartment->update($request->except('picture') + [
-            'picture' => $request->hasFile('picture') ? $request->file('picture')->store('avatars', 'public') : $apartment->picture,
-        ]);
+        $apartment->update(
+            $request->except('picture') + [
+                'picture' => $request->hasFile('picture') ? $request->file('picture')->store('avatars', 'public') : $apartment->picture,
+            ],
+        );
 
         alert()->success('Apartment updated successfully.');
         return redirect()->route('apartment.index');

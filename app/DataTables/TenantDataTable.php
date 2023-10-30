@@ -26,6 +26,7 @@ class TenantDataTable extends DataTable
             ->addColumn('picture', fn (Tenant $tenant) => '<img src="storage/' . $tenant->picture . '" height="50" width="50"/>')
             ->addColumn('actions' , fn(Tenant $tenant) => view('tenant.components.action' , compact('tenant')))
             ->editColumn('lived_in.apartment.name', fn (Tenant $tenant) => $tenant->livedIn?->apartment?->name ?? 'No Occupied Apartment')
+            ->editColumn('lived_in.unit.name', fn (Tenant $tenant) => $tenant->livedIn?->unit?->name ?? 'No Occupied Unit')
             ->rawColumns(['actions' , 'picture']);
     }
 
@@ -36,6 +37,7 @@ class TenantDataTable extends DataTable
     {
         return $model->newQuery()
             ->with('livedIn.apartment')
+            ->with('livedIn.unit')
             ->select('tenants.*')
         ;
     }
@@ -73,6 +75,7 @@ class TenantDataTable extends DataTable
             Column::make('occupation'),
             Column::make('number'),
             Column::make('lived_in.apartment.name', 'livedIn.apartment.name'),
+            Column::make('lived_in.unit.name','livedIn.unit.name'),
             Column::make('actions')
             ->searchable(false)
             ->printable(false)

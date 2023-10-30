@@ -19,7 +19,7 @@
         <i class="fa-solid fa-trash"></i>
     </button>
 
-    <a href="{{ route('unit.index') }}" class="btn btn-success">
+    <a href="{{ route('unit.index', $apartment->id) }}" class="btn btn-success">
         <i class="fa-solid fa-house"></i>
     </a>
     {{-- @endcan --}}

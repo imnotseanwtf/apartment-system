@@ -23,6 +23,7 @@ class StoreMovedInRequest extends FormRequest
     {
         return [
             'tenant_id' => ['required', 'exists:tenants,id'],
+            'apartment_id' => ['required','exists:apartments,id'],
             'start_date' => ['required', 'date'],
         ];
     }

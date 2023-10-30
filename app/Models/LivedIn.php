@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Models\Tenant;
-use App\Models\Expense;
+use App\Models\Unit;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -16,11 +16,12 @@ class LivedIn extends Model
     protected $fillable = [
         'tenant_id',
         'apartment_id',
+        'unit_id',
         'start_date',
-        'end_date',
+        'end_date'
     ];
 
-    public function tenants()
+    public function tenant(): BelongsTo
     {
         return $this->belongsTo(Tenant::class);
     }
@@ -30,8 +31,8 @@ class LivedIn extends Model
         return $this->belongsTo(Apartment::class);
     }
 
-    public function expenses(): HasMany
+    public function unit(): BelongsTo
     {
-        return $this->hasMany(Expense::class);
+        return $this->belongsTo(Unit::class);
     }
 }

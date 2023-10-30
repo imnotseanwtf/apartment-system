@@ -17,7 +17,7 @@ class ExpenseTypeController extends Controller
      */
     public function index(ExpenseTypeDataTable $dataTable)
     {
-        $livedIns = LivedIn::with('apartment')->get();
+        $livedIns = LivedIn::with('unit', 'tenant')->get();
 
         return $dataTable->render("expenseType.index", compact("livedIns"));
     }

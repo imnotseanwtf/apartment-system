@@ -19,6 +19,7 @@
         </div>
 
         {{-- ADD EXPENSES  --}}
+
         <div class="modal fade" id="plusModal" tabindex="-1" role="dialog" aria-labelledby="plusModal" aria-hidden="true">
             <div class="modal-dialog modal-md" role="document">
                 <div class="modal-content">
@@ -43,14 +44,25 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
+
                             <div class="form-group mt-3">
-                                <label for="livedin">{{ __('Live In') }}</label>
-                                <select name="lived_in_id" id="" class="form-select">
-                                    <option value="" selected disabled>Select Lived In</option>
+                                <label for="livedin">{{ __('Tenants') }}</label>
+                                <select name="lived_in_id" id="livedInId" class="form-select">
+                                    <option value="" selected disabled>Select Tenant</option>
                                     @foreach ($livedIns as $livedIn)
-                                        <option value="{{ $livedIn->id }}">{{ $livedIn->apartment->name }}</option>
+                                        <option value="{{ $livedIn->id }}">
+                                            {{ $livedIn->tenant->name }}
+                                        </option>
                                     @endforeach
                                 </select>
+                            </div>
+
+                            <div class="form-group mt-3">
+                                <label for="name">{{ __('Unit Name') }}</label>
+                                <div class="input-group">
+                                    <input name="unitName" type="text" id="unitName" @class(['form-control'])
+                                        placeholder="{{ __('Unit Name') }}" value="{{ old('unitName') }}" readonly>
+                                </div>
                             </div>
 
                             <div class="form-group mt-3">
@@ -71,6 +83,7 @@
         </div>
 
         {{-- EDIT EXPENSES --}}
+
         <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModal" aria-hidden="true">
             <div class="modal-dialog modal-md" role="document">
                 <div class="modal-content">
@@ -97,10 +110,10 @@
                             </div>
                             <div class="form-group mt-3">
                                 <label for="livedin">{{ __('Live In') }}</label>
-                                <select name="lived_in_id" id="livedInId" class="form-select">
-                                    <option value="" selected disabled>Select Lived In</option>
+                                <select name="lived_in_id" id="" class="form-select">
+                                    {{-- <option value="" selected disabled>Select Lived In</option> --}}
                                     @foreach ($livedIns as $livedIn)
-                                        <option value="{{ $livedIn->id }}">{{ $livedIn->apartment->name }}</option>
+                                        <option value="{{ $livedIn->id }}">{{ $livedIn->unit->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -200,11 +213,24 @@
 @endsection
 
 @push('scripts')
-
     {{ $dataTable->scripts(attributes: ['type' => 'module']) }}
 
     <script type="module">
         $(() => {
+
+            $('#livedInId').trigger('change');
+
+            $('#livedInId').on('change', function() {
+                console.log('click');
+                const unit = $(this).val();
+
+                if (unit) {
+                    $.get('/lived-in/' + unit, function(data) {
+                        console.log(data);
+                        $('#unitName').val(data.unit.name); // Assuming the response contains a "unitName" property
+                    })
+                }
+            });
 
             const tableInstance = window.LaravelDataTables['expensetype-table'] = $('#expensetype-table')
                 .DataTable()
@@ -236,6 +262,8 @@
                 });
 
             })
+
+
         })
     </script>
 @endpush

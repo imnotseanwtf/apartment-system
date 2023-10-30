@@ -29,9 +29,18 @@ class UnitDataTable extends DataTable
     /**
      * Get the query source of dataTable.
      */
-    public function query(Unit $model): QueryBuilder
+    private $id;
+
+    public function __construct($id)
     {
-        return $model->newQuery();
+        $this->id = $id;
+    }
+
+    public function query(Unit $model)
+    {
+        return $model->newQuery()
+            ->with('apartment')
+            ->where('apartment_id', $this->id);
     }
 
     /**

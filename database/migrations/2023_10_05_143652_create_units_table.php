@@ -5,8 +5,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -20,7 +19,7 @@ return new class extends Migration
             $table->double('advance_electricity');
             $table->double('advance_water');
             $table->string('description');
-            // $table->foreignIdFor(Apartment::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Apartment::class)->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

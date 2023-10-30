@@ -23,7 +23,7 @@ class UnitFactory extends Factory
             'security_deposit' => fake()->numberBetween(100, 1000),
             'advance_electricity' => fake()->numberBetween(100, 1000),
             'advance_water' => fake()->numberBetween(100, 1000),
-            // 'apartment_id' => Apartment::inRandomOrder()->value('id'),
+            'apartment_id' => Apartment::inRandomOrder()->value('id'),
             'description' => fake()->paragraph(),
         ];
     }

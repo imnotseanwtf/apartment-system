@@ -28,6 +28,7 @@ class StoreUnitRequest extends FormRequest
             'advance_electricity' => ['required', 'numeric'],
             'advance_water' => ['required', 'numeric'],
             'description' => ['required', 'string'],
+            'apartment_id' => ['required', 'exists:apartments,id'],
         ];
     }
 }

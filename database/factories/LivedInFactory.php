@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Tenant;
-use App\Models\Expense;
+use App\Models\Unit;
 use App\Models\Apartment;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -22,7 +22,8 @@ class LivedInFactory extends Factory
         return [
             'tenant_id' => Tenant::inRandomOrder()->value('id'),
             'apartment_id' => Apartment::inRandomOrder()->value('id'),
-            'start_date' => fake()->date()
+            'unit_id' => Unit::inRandomOrder()->value('id'),
+            'start_date' => fake()->date(),
         ];
     }
 }

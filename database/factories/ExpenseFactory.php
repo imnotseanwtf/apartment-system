@@ -20,11 +20,11 @@ class ExpenseFactory extends Factory
      */
     public function definition(): array
     {
-        $billsArray = ['Electricity', 'Water' , 'Others'];
+        $billsArray = ['Electricity', 'Water', 'Others'];
 
         return [
             'lived_in_id' => LivedIn::inRandomOrder()->value('id'),
-            'Bills' => $billsArray[array_rand($billsArray)] ,
+            'Bills' => $billsArray[array_rand($billsArray)],
             'price' => fake()->randomNumber(),
         ];
     }
