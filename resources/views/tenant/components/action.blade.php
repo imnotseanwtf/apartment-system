@@ -7,10 +7,10 @@
     {{-- @endcan --}}
 
     {{-- @can('read_tenant') --}}
-        <button class="btn btn-info viewBtn" data-bs-target="#viewModal" data-bs-toggle="modal"
-            data-tenant="{{ $tenant->id }}">
-            <i class="fa-solid fa-eye"></i>
-        </button>
+    <button class="btn btn-info viewBtn" data-bs-target="#viewModal" data-bs-toggle="modal"
+        data-tenant="{{ $tenant->id }}">
+        <i class="fa-solid fa-eye"></i>
+    </button>
     {{-- @endcan --}}
 
     {{-- @can('delete_tenant') --}}
@@ -20,4 +20,8 @@
     </button>
     {{-- @endcan --}}
 
+
+    <a href="{{ route('expenses.index', $tenant->livedIn->id) }}" class="btn btn-success">
+        <i class="fa-solid fa-money-bill"></i>
+    </a>
 </div>

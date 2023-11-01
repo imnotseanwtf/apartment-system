@@ -22,19 +22,25 @@ class ExpenseTypeDataTable extends DataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
-        return (new EloquentDataTable($query))
-        ->setRowId('id')
-        ->addColumn('action', fn(Expense $expense) => view('expenseType.components.action', compact('expense')));
+        return (new EloquentDataTable($query))->setRowId('id')->addColumn('action', fn(Expense $expense) => view('expenseType.components.action', compact('expense')));
     }
 
     /**
      * Get the query source of dataTable.
      */
-    public function query(Expense $model): QueryBuilder
+    private $id;
+
+    public function __construct($id)
     {
-        return $model->newQuery()
-            ->with('livedIn.apartment')
-            ->select('expenses.*');
+        $this->id = $id;
+    }
+
+    public function query(Expense $model)
+    {
+        return $model
+            ->newQuery()
+            ->with('livedIn')
+            ->where('lived_in_id', $this->id);
     }
 
     /**
@@ -43,20 +49,13 @@ class ExpenseTypeDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('expensetype-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    //->dom('Bfrtip')
-                    ->orderBy(1)
-                    ->selectStyleSingle()
-                    ->buttons([
-                        Button::make('excel'),
-                        Button::make('csv'),
-                        Button::make('pdf'),
-                        Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload')
-                    ]);
+            ->setTableId('expensetype-table')
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            //->dom('Bfrtip')
+            ->orderBy(1)
+            ->selectStyleSingle()
+            ->buttons([Button::make('excel'), Button::make('csv'), Button::make('pdf'), Button::make('print'), Button::make('reset'), Button::make('reload')]);
     }
 
     /**
@@ -65,13 +64,11 @@ class ExpenseTypeDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            // Column::make('id'),
             Column::make('bills'),
-            Column::make('lived_in.apartment.name', 'livedIn.apartment.name'),
             Column::make('price'),
             Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false),
+                ->exportable(false)
+                ->printable(false),
         ];
     }
 

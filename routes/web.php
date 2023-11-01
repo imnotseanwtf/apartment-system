@@ -5,6 +5,7 @@ use App\Http\Controllers\ExpenseTypeController;
 use App\Http\Controllers\MovedInController;
 use App\Http\Controllers\TenantController;
 use App\Http\Controllers\UnitController;
+use App\Models\Expense;
 use App\Models\LivedIn;
 use App\Models\Tenant;
 use Illuminate\Support\Facades\Auth;
@@ -54,11 +55,15 @@ Route::middleware('auth')->group(function () {
 
     // LIVED IN
 
-    Route::get('/lived-in/{lived_in_id}', function($livedIn) {
+    Route::get('payment/{unitPrice}', function($unitPrice) {
 
-        $livedInId = LivedIn::with('unit')->find($livedIn);
+        $unitPrice = Expense::find($unitPrice);
 
-        return response()->json($livedInId);
+        return response()->json($unitPrice);
     });
+
+    // EXPENSE
+
+    Route::get('expense/{id}/expenses', [ExpenseTypeController::class,'index'])->name('expenses.index');
 
 });

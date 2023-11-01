@@ -45,25 +45,7 @@
                                 @enderror
                             </div>
 
-                            <div class="form-group mt-3">
-                                <label for="livedin">{{ __('Tenants') }}</label>
-                                <select name="lived_in_id" id="livedInId" class="form-select">
-                                    <option value="" selected disabled>Select Tenant</option>
-                                    @foreach ($livedIns as $livedIn)
-                                        <option value="{{ $livedIn->id }}">
-                                            {{ $livedIn->tenant->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <div class="form-group mt-3">
-                                <label for="name">{{ __('Unit Name') }}</label>
-                                <div class="input-group">
-                                    <input name="unitName" type="text" id="unitName" @class(['form-control'])
-                                        placeholder="{{ __('Unit Name') }}" value="{{ old('unitName') }}" readonly>
-                                </div>
-                            </div>
+                            <input type="hidden" name="lived_in_id" value="{{ $id }}">
 
                             <div class="form-group mt-3">
                                 <label for="price">{{ __('Price') }}</label>
@@ -108,15 +90,16 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <div class="form-group mt-3">
+
+                            {{-- <div class="form-group mt-3">
                                 <label for="livedin">{{ __('Live In') }}</label>
                                 <select name="lived_in_id" id="" class="form-select">
-                                    {{-- <option value="" selected disabled>Select Lived In</option> --}}
+                                    <option value="" selected disabled>Select Lived In</option>
                                     @foreach ($livedIns as $livedIn)
                                         <option value="{{ $livedIn->id }}">{{ $livedIn->unit->name }}</option>
                                     @endforeach
                                 </select>
-                            </div>
+                            </div> --}}
 
                             <div class="form-group mt-3">
                                 <label for="price">{{ __('Price') }}</label>
@@ -132,6 +115,42 @@
                             <button type="submit" class="btn btn-primary">Save</button>
                         </div>
                     </form>
+                </div>
+            </div>
+        </div>
+
+        {{-- PAY MODAL --}}
+
+        <div class="modal fade" id="payModal" tabindex="-1" role="dialog" aria-labelledby="payModalLable"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exmapleModalLabel">Payment</h5>
+                        <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close">
+                            <i class="fa-solid fa-mark"></i>
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
+
+                        <div class="form-group mt-3">
+                            <select name="payment" id="paymentInput" class="form-select">
+                                <label for="">{{ __('Select Option') }}</label>
+                                <option value="" selected disabled>Select</option>
+                                <option value="{{ $unit->id }}">Fully Paid</option>
+                                <option value="downPayment">Down Payment</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group mt-3">
+                            <label for="">{{ __('Payment') }}</label>
+                            <div class="input-group">
+                                <input type="number" name="payment" placeholder="Payment" class="form-control"
+                                    value="{{ old('payment') }}" id="paymentInput">
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -218,19 +237,19 @@
     <script type="module">
         $(() => {
 
-            $('#livedInId').trigger('change');
+            $('#payment').trigger('change');
 
-            $('#livedInId').on('change', function() {
-                console.log('click');
+            $('#paymentSelect').on('change', function() {
                 const unit = $(this).val();
 
                 if (unit) {
-                    $.get('/lived-in/' + unit, function(data) {
-                        console.log(data);
-                        $('#unitName').val(data.unit.name); // Assuming the response contains a "unitName" property
-                    })
+                    // Assuming unit corresponds to an expense ID, otherwise adjust the URL accordingly
+                    $.get('/payment/' + unit, function(data) {
+                        $('#paymentInput').val(data.price); // Assuming the response contains a "price" property
+                    });
                 }
             });
+
 
             const tableInstance = window.LaravelDataTables['expensetype-table'] = $('#expensetype-table')
                 .DataTable()
@@ -262,7 +281,6 @@
                 });
 
             })
-
 
         })
     </script>

@@ -1,20 +1,22 @@
 <?php
 
+use App\Models\Expense;
 use App\Models\LivedIn;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('payments', function (Blueprint $table) {
+        Schema::create('audits', function (Blueprint $table) {
             $table->id();
-            $table->string('description');
-            $table->double('tenant_paid');
+            $table->double('payment');
+            $table->foreignIdFor(Expense::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(LivedIn::class)->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
@@ -25,6 +27,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('payments');
+        Schema::dropIfExists('audits');
     }
 };

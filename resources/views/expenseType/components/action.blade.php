@@ -7,10 +7,10 @@
     {{-- @endcan --}}
 
     {{-- @can('read_expense') --}}
-        <button class="btn btn-info viewBtn" data-bs-target="#viewModal" data-bs-toggle="modal"
-            data-expense="{{ $expense->id }}">
-            <i class="fa-solid fa-eye"></i>
-        </button>
+    <button class="btn btn-info viewBtn" data-bs-target="#viewModal" data-bs-toggle="modal"
+        data-expense="{{ $expense->id }}">
+        <i class="fa-solid fa-eye"></i>
+    </button>
     {{-- @endcan --}}
 
     {{-- @can('delete_expense') --}}
@@ -19,5 +19,10 @@
         <i class="fa-solid fa-trash"></i>
     </button>
     {{-- @endcan --}}
+
+    <button class="btn btn-success payBtn" data-bs-toggle="modal" data-bs-target="#payModal"
+        data-expense="{{ $expense->id }}">
+        <i class="fa-solid fa-money-check"></i>
+    </button>
 
 </div>

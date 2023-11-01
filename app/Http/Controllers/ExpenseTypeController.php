@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Expense;
 use App\Models\LivedIn;
+use App\Models\Unit;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Contracts\View\View;
@@ -15,11 +16,13 @@ class ExpenseTypeController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(ExpenseTypeDataTable $dataTable)
+    public function index(Request $request, $id)
     {
-        $livedIns = LivedIn::with('unit', 'tenant')->get();
+        $dataTable = new ExpenseTypeDataTable($id);
 
-        return $dataTable->render("expenseType.index", compact("livedIns"));
+        $unit = Unit::find($id);
+
+        return $dataTable->render('expenseType.index', compact('id' ,'unit'));
     }
 
     /**
@@ -33,22 +36,20 @@ class ExpenseTypeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+
     public function store(StoreExpenseTypeRequest $request)
     {
-        Expense::create($request->validated());
+        $expense = Expense::create($request->validated());
 
         alert()->success('Bill has been added.');
-        return redirect()->route('expenses.index');
+        return redirect()->route('expenses.index', ['id' => $expense['lived_in_id']]);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Expense $expense): JsonResponse | View
+    public function show(Expense $expense): JsonResponse|View
     {
-
-        $expense->load('livedIn.apartment');
-
         return response()->json($expense);
     }
 

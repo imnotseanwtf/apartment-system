@@ -50,13 +50,13 @@
         </a>
     </li>
 
-    <li class="nav-item {{ request()->routeIs('expenses.index') ? 'active' : '' }}">
+    {{-- <li class="nav-item {{ request()->routeIs('expenses.index') ? 'active' : '' }}">
         <a href="{{ route('expenses.index') }}" class="nav-link">
             <span class="sidebar-icon me-3">
                 <i class="fas fa-money-bill"></i>
             </span>
             <span class="sidebar-text">{{ __('Expenses') }}</span>
         </a>
-    </li>
+    </li> --}}
 
 </ul>
