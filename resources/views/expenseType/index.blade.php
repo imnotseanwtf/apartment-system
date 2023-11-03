@@ -138,7 +138,7 @@
                             <select name="payment" id="paymentInput" class="form-select">
                                 <label for="">{{ __('Select Option') }}</label>
                                 <option value="" selected disabled>Select</option>
-                                <option value="{{ $unit->id }}">Fully Paid</option>
+                                <option value="">Fully Paid</option>
                                 <option value="downPayment">Down Payment</option>
                             </select>
                         </div>

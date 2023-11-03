@@ -22,7 +22,7 @@ class ExpenseTypeController extends Controller
 
         $unit = Unit::find($id);
 
-        return $dataTable->render('expenseType.index', compact('id' ,'unit'));
+        return $dataTable->render('expenseType.index', compact('id', 'unit'));
     }
 
     /**
