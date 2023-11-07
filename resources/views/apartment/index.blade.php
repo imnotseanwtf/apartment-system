@@ -12,7 +12,8 @@
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <div>Apartments</div>
-                <button class="btn btn-primary" data-bs-target="#createModal" data-bs-toggle="modal">Create Apartment
+                <button class="btn btn-primary" data-bs-target="#createModal" data-bs-toggle="modal">
+                    Create Apartment
                 </button>
             </div>
             <div class="card card-body border-0 shadow table-wrapper table-responsive">
@@ -20,6 +21,7 @@
             </div>
         </div>
 
+        {{-- CREATE --}}
 
         <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModal"
             aria-hidden="true">
@@ -35,6 +37,7 @@
                     <form action="{{ route('apartment.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="modal-body">
+
                             <div class="form-group">
                                 <label for="name">{{ __('Name') }}</label>
                                 <div class="input-group">
@@ -45,7 +48,6 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-
 
                             <div class="form-group mt-3">
                                 <label for="name">{{ __('Picture') }}</label>
@@ -95,7 +97,7 @@
                                 @enderror
                             </div>
 
-                            <div class="form-group mt-3">
+                            <div class="form-group mt-3 mb-3">
                                 <label for="name">{{ __('Description') }}</label>
                                 <div class="input-group">
                                     <textarea name="description" class="form-control" type="text" @class(['form-control', 'is-invalid' => $errors->has('description')])
@@ -116,6 +118,8 @@
             </div>
         </div>
 
+        {{-- VIEW --}}
+
         <div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="viewModalLabel"
             aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -127,14 +131,14 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="form-group mt-3">
+
+                        <div class="form-group">
                             <label for="name">{{ __('Name') }}</label>
                             <div class="input-group">
                                 <input name="name" type="text" id="view_name" @class(['form-control'])
                                     placeholder="{{ __('Name') }}" value="{{ old('name') }}" readonly>
                             </div>
                         </div>
-
 
                         {{-- <div class="row mt-3">
                             <label for="view_icon" class="col-12">{{ __('Icon') }}</label>
@@ -166,7 +170,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group mt-3">
+                        <div class="form-group mt-3 mb-3">
                             <label for="name">{{ __('Description') }}</label>
                             <div class="input-group">
                                 <input name="description" type="text" id="view_description"
@@ -182,6 +186,8 @@
                 </div>
             </div>
         </div>
+
+        {{-- DELETE --}}
 
         <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deletePromoModal"
             aria-hidden="true">
@@ -208,6 +214,8 @@
             </div>
         </div>
 
+        {{-- UPDATE --}}
+
         <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModal"
             aria-hidden="true">
             <div class="modal-dialog modal-md" role="document">
@@ -222,7 +230,7 @@
                         @csrf
                         @method('PUT')
                         <div class="modal-body">
-                            <div class="form-group mt-3">
+                            <div class="form-group">
                                 <label for="name">{{ __('Name') }}</label>
                                 <div class="input-group">
                                     <input name="name" type="text" @class(['form-control', 'is-invalid' => $errors->has('name')])
@@ -284,7 +292,7 @@
                                 @enderror
                             </div>
 
-                            <div class="form-group mt-3">
+                            <div class="form-group mt-3 mb-3">
                                 <label for="name">{{ __('Description') }}</label>
                                 <div class="input-group">
                                     <textarea name="description" class="form-control" type="text" @class(['form-control', 'is-invalid' => $errors->has('description')])
@@ -348,10 +356,10 @@
                     $('#delete-form').attr('action', '/apartment/' + $(this).data('apartment'));
                 });
 
-                $('.addTenantBtn').click(function() {
-                    $('#addTenantForm').attr('action', '/apartment/' + $(this).data('apartment') +
-                        '/moved-in');
-                })
+                // $('.addTenantBtn').click(function() {
+                //     $('#addTenantForm').attr('action', '/apartment/' + $(this).data('apartment') +
+                //         '/moved-in');
+                // })
 
             })
         })

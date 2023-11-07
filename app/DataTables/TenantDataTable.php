@@ -23,23 +23,24 @@ class TenantDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->setRowId('id')
-            ->addColumn('picture', fn (Tenant $tenant) => '<img src="storage/' . $tenant->picture . '" height="50" width="50"/>')
-            ->addColumn('actions' , fn(Tenant $tenant) => view('tenant.components.action' , compact('tenant')))
-            ->editColumn('lived_in.apartment.name', fn (Tenant $tenant) => $tenant->livedIn?->apartment?->name ?? 'No Occupied Apartment')
-            ->editColumn('lived_in.unit.name', fn (Tenant $tenant) => $tenant->livedIn?->unit?->name ?? 'No Occupied Unit')
-            ->rawColumns(['actions' , 'picture']);
+            ->addColumn('picture', fn(Tenant $tenant) => '<img src="storage/' . $tenant->picture . '" height="50" width="50"/>')
+            ->addColumn('actions', fn(Tenant $tenant) => view('tenant.components.action', compact('tenant')))
+            ->editColumn('lived_in.apartment.name', fn(Tenant $tenant) => $tenant->livedIn?->apartment?->name ?? 'No Occupied Apartment')
+            ->editColumn('lived_in.unit.name', fn(Tenant $tenant) => $tenant->livedIn?->unit?->name ?? 'No Occupied Unit')
+            ->rawColumns(['actions', 'picture']);
     }
 
     /**
      * Get the query source of dataTable.
      */
+
     public function query(Tenant $model): QueryBuilder
     {
-        return $model->newQuery()
+        return $model
+            ->newQuery()
             ->with('livedIn.apartment')
             ->with('livedIn.unit')
-            ->select('tenants.*')
-        ;
+            ->select('tenants.*');
     }
 
     /**
@@ -48,20 +49,13 @@ class TenantDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('tenant_dataTable')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    //->dom('Bfrtip')
-                    ->orderBy(1)
-                    ->selectStyleSingle()
-                    ->buttons([
-                        Button::make('excel'),
-                        Button::make('csv'),
-                        Button::make('pdf'),
-                        Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload')
-                    ]);
+            ->setTableId('tenant_dataTable')
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            //->dom('Bfrtip')
+            ->orderBy(1)
+            ->selectStyleSingle()
+            ->buttons([Button::make('excel'), Button::make('csv'), Button::make('pdf'), Button::make('print'), Button::make('reset'), Button::make('reload')]);
     }
 
     /**
@@ -75,11 +69,11 @@ class TenantDataTable extends DataTable
             Column::make('occupation'),
             Column::make('number'),
             Column::make('lived_in.apartment.name', 'livedIn.apartment.name'),
-            Column::make('lived_in.unit.name','livedIn.unit.name'),
+            Column::make('lived_in.unit.name', 'livedIn.unit.name'),
             Column::make('actions')
-            ->searchable(false)
-            ->printable(false)
-            ->orderable(false)
+                ->searchable(false)
+                ->printable(false)
+                ->orderable(false),
         ];
     }
 

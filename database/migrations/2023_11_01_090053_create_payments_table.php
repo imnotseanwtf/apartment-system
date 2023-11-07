@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('audits', function (Blueprint $table) {
+        Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->double('payment');
+            $table->double('amount');
             $table->foreignIdFor(Expense::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(LivedIn::class)->constrained()->cascadeOnDelete();
             $table->timestamps();

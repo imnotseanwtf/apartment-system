@@ -1,15 +1,16 @@
 <?php
 
-use App\Http\Controllers\ApartmentController;
-use App\Http\Controllers\ExpenseTypeController;
-use App\Http\Controllers\MovedInController;
-use App\Http\Controllers\TenantController;
-use App\Http\Controllers\UnitController;
+use App\Models\Tenant;
 use App\Models\Expense;
 use App\Models\LivedIn;
-use App\Models\Tenant;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UnitController;
+use App\Http\Controllers\TenantController;
+use App\Http\Controllers\MovedInController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ApartmentController;
+use App\Http\Controllers\ExpenseTypeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,15 +40,18 @@ Route::middleware('auth')->group(function () {
     // UNIT
 
     Route::resource('unit', UnitController::class)->except('index');
-    Route::get('unit/{id}/units', [UnitController::class,'index'])->name('unit.index');
+    Route::get('unit/{id}/units', [UnitController::class, 'index'])->name('unit.index');
 
     // RESOURCES
 
-    Route::resources([
-        'apartment' => ApartmentController::class,
-        'tenant' => TenantController::class,
-        'expenses' => ExpenseTypeController::class,
-    ], ['except' => ['create', 'edit']]);
+    Route::resources(
+        [
+            'apartment' => ApartmentController::class,
+            'tenant' => TenantController::class,
+            'expenses' => ExpenseTypeController::class,
+        ],
+        ['except' => ['create', 'edit']],
+    );
 
     // MOVED IN
 
@@ -55,15 +59,19 @@ Route::middleware('auth')->group(function () {
 
     // LIVED IN
 
-    Route::get('payment/{unitPrice}', function($unitPrice) {
+    Route::get('payment/{unitPrice}', function ($expensePrice) {
 
-        $unitPrice = Expense::find($unitPrice);
+        $price = Expense::find($expensePrice);
 
-        return response()->json($unitPrice);
+        return response()->json($price);
     });
 
     // EXPENSE
 
-    Route::get('expense/{id}/expenses', [ExpenseTypeController::class,'index'])->name('expenses.index');
+    Route::get('expense/{id}/expenses', [ExpenseTypeController::class, 'index'])->name('expenses.index');
+
+    // AUDIT
+
+    Route::post('payment/store', [PaymentController::class , 'store'])->name('payment.store');
 
 });

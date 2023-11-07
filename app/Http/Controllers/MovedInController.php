@@ -8,7 +8,6 @@ use App\Http\Requests\StoreMovedInRequest;
 
 class MovedInController extends Controller
 {
-
     public function __invoke(StoreMovedInRequest $request, Unit $unit)
     {
         $unit->livedIns()->create($request->validated());

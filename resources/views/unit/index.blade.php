@@ -103,7 +103,7 @@
                                 @enderror
                             </div>
 
-                            <div class="form-group mt-3">
+                            <div class="form-group mt-3 mb-3">
                                 <label for="name">{{ __('Description') }}</label>
                                 <div class="input-group">
                                     <textarea name="description" class="form-control" type="text" @class(['form-control', 'is-invalid' => $errors->has('description')])
@@ -138,7 +138,7 @@
                     </div>
 
                     <div class="modal-body">
-                        <div class="form-group mt-3">
+                        <div class="form-group">
                             <label for="name">{{ __('Name') }}</label>
                             <div class="input-group">
                                 <input name="name" type="text" id="view_name" @class(['form-control'])
@@ -206,6 +206,7 @@
                     <form action="" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="modal-body">
+
                             <div class="form-group">
                                 <label for="name">{{ __('Name') }}</label>
                                 <div class="input-group">
@@ -275,7 +276,7 @@
                                 @enderror
                             </div>
 
-                            <div class="form-group mt-3">
+                            <div class="form-group mt-3 mb-3">
                                 <label for="name">{{ __('Description') }}</label>
                                 <div class="input-group">
                                     <textarea name="description" class="form-control" type="text" @class(['form-control', 'is-invalid' => $errors->has('description')])
@@ -311,39 +312,37 @@
                     <form action="" method="POST" enctype="multipart/form-data" id="addTenantForm">
                         @csrf
                         <div class="modal-body">
-                            <div class="row">
-                                <input type="hidden" name="apartment_id" id="apartmentId">
-                                <div class="form-group">
-                                    <label for="tenants">Tenant</label>
-                                    <div class="input-group">
-                                        <select name="tenant_id" id="tenants" class="select2 form-control">
-                                            @foreach ($tenants as $tenant)
-                                                <option value="{{ $tenant->id }}">{{ $tenant->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    @error('tenant_id')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
+                            <input type="hidden" name="apartment_id" id="apartmentId">
 
-                                <div class="form-group mt-3 mb-3">
-                                    <label for="date">{{ __('Moved In Date') }}</label>
-                                    <div class="input-group">
-                                        <input name="start_date" type="date" @class(['form-control', 'is-invalid' => $errors->has('start_date')])
-                                            placeholder="{{ __('Date') }}" value="{{ old('start_date') }}" autofocus
-                                            id="date">
-                                    </div>
-                                    @error('start_date')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
+                            <div class="form-group">
+                                <label for="tenants">Tenant</label>
+                                <div class="input-group">
+                                    <select name="tenant_id" id="tenants" class="select2 form-control">
+                                        @foreach ($tenants as $tenant)
+                                            <option value="{{ $tenant->id }}">{{ $tenant->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
+                                @error('tenant_id')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
 
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary">Save</button>
+                            <div class="form-group mt-3 mb-3">
+                                <label for="date">{{ __('Moved In Date') }}</label>
+                                <div class="input-group">
+                                    <input name="start_date" type="date" @class(['form-control', 'is-invalid' => $errors->has('start_date')])
+                                        placeholder="{{ __('Date') }}" value="{{ old('start_date') }}" autofocus
+                                        id="date">
                                 </div>
+                                @error('start_date')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save</button>
                             </div>
                         </div>
                     </form>
@@ -377,7 +376,6 @@
                 </form>
             </div>
         </div>
-
     </div>
 @endsection
 
@@ -423,12 +421,17 @@
                     $('#delete-form').attr('action', '/unit/' + $(this).data('unit'));
                 });
 
-
-
                 $('.addTenantBtn').click(function() {
                     $('#apartmentId').val($(this).data('apartment'));
-                    $('#addTenantForm').attr('action', '/apartment/' + $(this).data('unit') + '/moved-in');
-                })
+                    fetch('/unit/' + $(this).data('unit'))
+                        .then(response => response.json())
+                        .then(unit => {
+                            $('#apartment_name').text(unit.name);
+                            $('#addTenantForm').attr('action', '/apartment/' + $(this).data(
+                                'unit') + '/moved-in');
+                        });
+                });
+
             })
         })
     </script>

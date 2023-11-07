@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Expense;
 use App\Models\LivedIn;
-use App\Models\Unit;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Contracts\View\View;
@@ -20,9 +19,7 @@ class ExpenseTypeController extends Controller
     {
         $dataTable = new ExpenseTypeDataTable($id);
 
-        $unit = Unit::find($id);
-
-        return $dataTable->render('expenseType.index', compact('id', 'unit'));
+        return $dataTable->render('expenseType.index', compact('id'));
     }
 
     /**
@@ -69,7 +66,7 @@ class ExpenseTypeController extends Controller
         $expense->update($request->validated());
 
         alert()->success('Bill has been updated.');
-        return redirect()->route('expenses.index');
+        return redirect()->route('expenses.index', ['id' => $expense['lived_in_id']]);
     }
 
     /**
@@ -80,6 +77,6 @@ class ExpenseTypeController extends Controller
         alert()->success('Bill has been removed.');
         $expense->delete();
 
-        return redirect()->route('expenses.index');
+        return redirect()->route('expenses.index', ['id' => $expense['lived_in_id']]);
     }
 }

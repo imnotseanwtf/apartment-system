@@ -4,14 +4,15 @@ namespace App\DataTables;
 
 use App\Models\Expense;
 use App\Models\ExpenseType;
-use Illuminate\Database\Eloquent\Builder as QueryBuilder;
-use Yajra\DataTables\EloquentDataTable;
-use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
+use Illuminate\Support\Facades\DB;
+use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
+use Yajra\DataTables\Html\Builder as HtmlBuilder;
+use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 
 class ExpenseTypeDataTable extends DataTable
 {
@@ -22,12 +23,19 @@ class ExpenseTypeDataTable extends DataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
-        return (new EloquentDataTable($query))->setRowId('id')->addColumn('action', fn(Expense $expense) => view('expenseType.components.action', compact('expense')));
+        return (new EloquentDataTable($query))
+            ->setRowId('id')
+            ->addColumn('payment_status', function ($expense) {
+                return $expense->payment_status;
+            })
+            ->addColumn('action', fn(Expense $expense) => view('expenseType.components.action', compact('expense')))
+            ->rawColumns(['action', 'payment_status']);
     }
 
     /**
      * Get the query source of dataTable.
      */
+
     private $id;
 
     public function __construct($id)
@@ -37,10 +45,13 @@ class ExpenseTypeDataTable extends DataTable
 
     public function query(Expense $model)
     {
-        return $model
+        $query = $model
             ->newQuery()
             ->with('livedIn')
-            ->where('lived_in_id', $this->id);
+            ->where('lived_in_id', $this->id)
+            ->select(['expenses.*', DB::raw('IF(price = 0, "<i class=\"fas fa-check-circle fa-2x text-success\"></i>", "<i class=\"fas fa-times-circle fa-2x text-danger\"></i>") as payment_status')]);
+
+        return $this->applyScopes($query);
     }
 
     /**
@@ -66,6 +77,11 @@ class ExpenseTypeDataTable extends DataTable
         return [
             Column::make('bills'),
             Column::make('price'),
+            Column::make('payment_status')
+                ->title('Payment Status')
+                ->exportable(false)
+                ->width(30)
+                ->addClass('text-center'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false),
