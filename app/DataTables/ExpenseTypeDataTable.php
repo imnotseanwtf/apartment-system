@@ -25,9 +25,7 @@ class ExpenseTypeDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->setRowId('id')
-            ->addColumn('payment_status', function ($expense) {
-                return $expense->payment_status;
-            })
+            ->addColumn('payment_status', fn(Expense $expense) => $expense->price == 0 ? '<i class="fas fa-check-circle fa-2x text-success"></i>' : '<i class="fas fa-times-circle fa-2x text-danger"></i>')
             ->addColumn('action', fn(Expense $expense) => view('expenseType.components.action', compact('expense')))
             ->rawColumns(['action', 'payment_status']);
     }
@@ -45,13 +43,10 @@ class ExpenseTypeDataTable extends DataTable
 
     public function query(Expense $model)
     {
-        $query = $model
+        return $model
             ->newQuery()
             ->with('livedIn')
-            ->where('lived_in_id', $this->id)
-            ->select(['expenses.*', DB::raw('IF(price = 0, "<i class=\"fas fa-check-circle fa-2x text-success\"></i>", "<i class=\"fas fa-times-circle fa-2x text-danger\"></i>") as payment_status')]);
-
-        return $this->applyScopes($query);
+            ->where('lived_in_id', $this->id);
     }
 
     /**

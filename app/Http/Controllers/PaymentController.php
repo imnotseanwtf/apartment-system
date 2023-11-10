@@ -52,7 +52,7 @@ class PaymentController extends Controller
             $expense->save();
         }
 
-        alert()->success('Auditing Success');
+        alert()->success('Payment Success');
 
         return redirect()->back();
     }

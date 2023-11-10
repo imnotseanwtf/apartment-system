@@ -12,10 +12,13 @@
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <div>Expenses</div>
+                <div>
+                <button type="button" class="btn btn-primary historyBtn">Transaction History</button>
                 <button type="button" class="btn btn-success addBillBtn" data-bs-toggle="modal"
                     data-bs-target="#plusModal">
                     Add Expenses
                 </button>
+            </div>
             </div>
             <div class="card card-body border-0 shadow table-wrapper table-responsive">
                 {{ $dataTable->table() }}
@@ -36,7 +39,7 @@
                     <form action="{{ route('expenses.store') }}" method="POST">
                         @csrf
                         <div class="modal-body">
-                            <div class="form-group mt-3">
+                            <div class="form-group">
                                 <label for="bills">{{ __('Expense Types') }}</label>
                                 <select name="bills" id="" class="form-select">
                                     <option value="" selected disabled>Select Expense Type</option>
@@ -51,7 +54,7 @@
 
                             <input type="hidden" name="lived_in_id" value="{{ $id }}">
 
-                            <div class="form-group mt-3">
+                            <div class="form-group mt-3 mb-3">
                                 <label for="price">{{ __('Price') }}</label>
                                 <div class="input-group">
                                     <input type="text" name="price" placeholder="Price" class="form-control">
@@ -82,7 +85,7 @@
                     <form action="" method="POST">
                         @csrf
                         <div class="modal-body">
-                            <div class="form-group mt-3">
+                            <div class="form-group">
                                 <label for="bills">{{ __('Expense Types') }}</label>
                                 <select name="bills" id="bill_id" class="form-select">
                                     <option value="" selected disabled>Select Expense Type</option>
@@ -105,7 +108,7 @@
                                 </select>
                             </div> --}}
 
-                            <div class="form-group mt-3">
+                            <div class="form-group mt-3 mb-3">
                                 <label for="price">{{ __('Price') }}</label>
                                 <div class="input-group">
                                     <input type="text" name="price" placeholder="Price" class="form-control"
@@ -196,7 +199,7 @@
                     </div>
 
                     <div class="modal-body">
-                        <div class="form-group mt-3">
+                        <div class="form-group">
                             <label for="name">{{ __('Bills Name') }}</label>
                             <div class="input-group">
                                 <input name="bills" type="text" id="view_bills" @class(['form-control'])
@@ -212,7 +215,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group mt-3">
+                        <div class="form-group mt-3 mb-3">
                             <label for="name">{{ __('Base Price') }}</label>
                             <div class="input-group">
                                 <input name="base_price" type="text" id="view_price" @class(['form-control'])
