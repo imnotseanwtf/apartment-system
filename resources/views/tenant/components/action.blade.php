@@ -24,7 +24,5 @@
         <a href="{{ route('expenses.index', $tenant->livedIn->id) }}" class="btn btn-success">
             <i class="fa-solid fa-money-bill"></i>
         </a>
-    @else
-        <!-- Do something else when $tenant->livedIn is null -->
     @endif
 </div>

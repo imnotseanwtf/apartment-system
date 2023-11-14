@@ -18,7 +18,6 @@ return new class extends Migration {
             $table->double('security_deposit');
             $table->double('advance_electricity');
             $table->double('advance_water');
-            $table->string('description');
             $table->foreignIdFor(Apartment::class)->constrained()->cascadeOnDelete();
             $table->timestamps();
         });

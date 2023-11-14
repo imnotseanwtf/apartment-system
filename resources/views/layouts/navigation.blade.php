@@ -32,6 +32,8 @@
         </a>
     </li>
 
+    <hr>
+
     <li class="nav-item {{ request()->routeIs('apartment.index') ? 'active' : '' }}">
         <a href="{{ route('apartment.index') }}" class="nav-link">
             <span class="sidebar-icon me-3">

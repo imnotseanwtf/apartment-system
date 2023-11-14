@@ -19,9 +19,11 @@
     </button>
     {{-- @endcan --}}
 
-    <button class="btn btn-success addTenantBtn" data-bs-toggle="modal" data-bs-target="#addTenantModal"
-        data-unit="{{ $unit->id }}" data-apartment="{{ $unit->apartment_id }}">
-        <i class="fa-solid fa-plus"></i>
-    </button>
+    @if (!optional($unit->livedIn)->tenant)
+        <button class="btn btn-success addTenantBtn" data-bs-toggle="modal" data-bs-target="#addTenantModal"
+            data-unit="{{ $unit->id }}" data-apartment="{{ $unit->apartment_id }}">
+            <i class="fa-solid fa-plus"></i>
+        </button>
+    @endif
 
 </div>

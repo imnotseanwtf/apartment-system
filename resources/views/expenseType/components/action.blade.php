@@ -20,9 +20,10 @@
     </button>
     {{-- @endcan --}}
 
-    <button class="btn btn-success payBtn" data-bs-toggle="modal" data-bs-target="#payModal"
-        data-expense="{{ $expense->id }}">
-        <i class="fa-solid fa-money-check"></i>
-    </button>
-
+    @if ($expense->price > 0)
+        <button class="btn btn-success payBtn" data-bs-toggle="modal" data-bs-target="#payModal"
+            data-expense="{{ $expense->id }}">
+            <i class="fa-solid fa-money-check"></i>
+        </button>
+    @endif
 </div>

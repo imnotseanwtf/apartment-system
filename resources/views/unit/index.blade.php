@@ -319,7 +319,9 @@
                                 <div class="input-group">
                                     <select name="tenant_id" id="tenants" class="select2 form-control">
                                         @foreach ($tenants as $tenant)
-                                            <option value="{{ $tenant->id }}">{{ $tenant->name }}</option>
+                                            @if (!optional($tenant->livedIn)->unit)
+                                                <option value="{{ $tenant->id }}">{{ $tenant->name }}</option>
+                                            @endif
                                         @endforeach
                                     </select>
                                 </div>

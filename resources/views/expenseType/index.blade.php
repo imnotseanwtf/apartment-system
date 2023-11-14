@@ -284,8 +284,7 @@
                 if (unit) {
                     // Assuming unit corresponds to an expense ID, otherwise adjust the URL accordingly
                     $.get('/payment/' + unit, function(data) {
-                        paymentInput.val(data
-                            .price); // Assuming the response contains a "price" property
+                        paymentInput.val(data.price); // Assuming the response contains a "price" property
                     });
                 }
             });

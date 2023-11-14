@@ -17,7 +17,9 @@ class Expense extends Model implements Auditable
     protected $fillable = [
         'bills',
         'lived_in_id',
-        'price'
+        'price',
+        'start_date',
+        'end_date'
     ];
 
     public function livedIn(): BelongsTo

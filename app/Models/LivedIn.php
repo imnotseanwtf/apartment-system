@@ -35,4 +35,9 @@ class LivedIn extends Model
     {
         return $this->belongsTo(Unit::class);
     }
+
+    public function expenses(): HasMany
+    {
+        return $this->hasMany(Expense::class);
+    }
 }

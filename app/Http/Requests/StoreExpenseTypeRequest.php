@@ -25,6 +25,8 @@ class StoreExpenseTypeRequest extends FormRequest
             'bills' => ['required', 'string', 'max:255'],
             'lived_in_id' => ['required', 'exists:lived_ins,id'],
             'price' => ['required', 'numeric'],
+            'start_date' => ['nullable'],
+            'end_date' => ['nullable']
         ];
     }
 }

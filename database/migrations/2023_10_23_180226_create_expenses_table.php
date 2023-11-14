@@ -18,6 +18,8 @@ return new class extends Migration {
             $table->string('bills');
             $table->foreignIdFor(LivedIn::class)->constrained()->cascadeOnDelete();
             $table->double('price');
+            $table->dateTime('start_date')->nullable();
+            $table->dateTime('end_date')->nullable();
             $table->timestamps();
         });
     }

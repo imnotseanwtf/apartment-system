@@ -23,7 +23,8 @@ class UnitDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->setRowId('id')
-            ->addColumn('actions', fn (Unit $unit) => view('unit.components.action', compact('unit')));
+            ->addColumn('actions', fn (Unit $unit) => view('unit.components.action', compact('unit')))
+            ->addColumn('status', fn(Unit $unit) => $unit->livedIn?->tenant?->name ?? 'No Tenant Yet');
     }
 
     /**
@@ -76,6 +77,7 @@ class UnitDataTable extends DataTable
             Column::make('security_deposit'),
             Column::make('advance_electricity'),
             Column::make('advance_water'),
+            Column::make('status'),
             Column::make('actions')
                 ->searchable(false)
                 ->printable(false)
