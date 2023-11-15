@@ -31,6 +31,9 @@ class ResetMonthlyRent extends Command
         // Retrieve all LivedIn records
         $livedIns = LivedIn::with('unit')->get();
 
+        // Define today's date using the same format as your database
+        $today = Carbon::today()->format('Y-m-d');
+
         foreach ($livedIns as $livedIn) {
             // Get the most recent 'Monthly Rent' expense for this lived-in record
             $latestRentExpense = Expense::where('lived_in_id', $livedIn->id)
@@ -38,14 +41,20 @@ class ResetMonthlyRent extends Command
                 ->latest('created_at')
                 ->first();
 
-            if ($latestRentExpense) {
-                // Add the monthly rent to the existing expense record
-                $latestRentExpense->increment('price', $livedIn->unit->monthly_rent);
+            if ($latestRentExpense && $latestRentExpense->end_date) {
+                // Format the end_date from the database to match the format used by $today
+                $endDateFormat = Carbon::parse($latestRentExpense->end_date)->format('Y-m-d');
 
-                // If the current price is zero, then add one month to the end date
-                if ($latestRentExpense->price === $livedIn->unit->monthly_rent) {
-                    $newEndDate = $latestRentExpense->end_date ? Carbon::parse($latestRentExpense->end_date)->addMonth() : Carbon::now()->addMonth();
-                    $latestRentExpense->update(['end_date' => $newEndDate]);
+                // Check if the end_date of the latest rent expense is today
+                if ($endDateFormat === $today) {
+                    // Add the monthly rent to the existing expense record
+                    $latestRentExpense->increment('price', $livedIn->unit->monthly_rent);
+
+                    // If the price after incrementing equals monthly rent, update the end_date by adding one month
+                    if ($latestRentExpense->price === $livedIn->unit->monthly_rent) {
+                        $newEndDate = Carbon::now()->addMonth();
+                        $latestRentExpense->update(['end_date' => $newEndDate]);
+                    }
                 }
             }
         }

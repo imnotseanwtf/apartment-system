@@ -31,5 +31,4 @@ class Expense extends Model implements Auditable
     {
         $query->where('lived_in_id', $id);
     }
-
 }

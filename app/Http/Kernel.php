@@ -62,6 +62,6 @@ class Kernel extends HttpKernel
     protected function schedule(Schedule $schedule)
     {
         // Schedule the command to run monthly
-        $schedule->command('rent:add-monthly-balance')->monthly();
+        $schedule->command('rent:add-monthly-balance')->everyFiveMinutes();
     }
 }

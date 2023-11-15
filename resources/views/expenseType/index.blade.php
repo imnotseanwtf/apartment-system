@@ -13,12 +13,11 @@
             <div class="card-header d-flex justify-content-between align-items-center">
                 <div>Expenses</div>
                 <div>
-                <button type="button" class="btn btn-primary historyBtn">Transaction History</button>
-                <button type="button" class="btn btn-success addBillBtn" data-bs-toggle="modal"
-                    data-bs-target="#plusModal">
-                    Add Expenses
-                </button>
-            </div>
+                    <button type="button" class="btn btn-primary historyBtn" data-bs-toggle="modal"
+                        data-bs-target="#transactionModal">Transaction History</button>
+                    <button type="button" class="btn btn-success addBillBtn" data-bs-toggle="modal"
+                        data-bs-target="#plusModal">Add Expenses</button>
+                </div>
             </div>
             <div class="card card-body border-0 shadow table-wrapper table-responsive">
                 {{ $dataTable->table() }}
@@ -108,7 +107,7 @@
                                 </select>
                             </div> --}}
 
-                            <div class="form-group mt-3 mb-3">
+                            <div class="form-group mt-3">
                                 <label for="price">{{ __('Price') }}</label>
                                 <div class="input-group">
                                     <input type="text" name="price" placeholder="Price" class="form-control"
@@ -167,7 +166,7 @@
                                 </select>
                             </div>
 
-                            <div class="form-group mt-3 mb-3">
+                            <div class="form-group mt-3">
                                 <label for="">{{ __('Payment') }}</label>
                                 <div class="input-group">
                                     <input type="number" name="payment" placeholder="Payment" class="form-control"
@@ -175,10 +174,10 @@
                                 </div>
                             </div>
 
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Save</button>
-                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save</button>
                         </div>
                     </form>
                 </div>
@@ -223,9 +222,9 @@
                             </div>
                         </div>
 
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
@@ -248,17 +247,38 @@
                         </div>
                         <div class="modal-body">
                             <div class="text-center mb-2">Are you sure you want to delete this?</div>
-                            <div class="modal-footer mt-2">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Save changes</button>
-                            </div>
+                        </div>
+                        <div class="modal-footer mt-2">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
 
-    </div>
+        {{-- TRANSACTION HISTORY MODAL --}}
+
+        <div class="modal fade" id="transactionModal" tabindex="-1" role="dialog"
+            aria-labelledby="transactionPromoModal" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Transaction History</h5>
+                        <button type="button" data-bs-dismiss="modal" aria-label="Close" class="btn">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+
+                    </div>
+                    <div class="modal-footer mt-2">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 
@@ -284,7 +304,8 @@
                 if (unit) {
                     // Assuming unit corresponds to an expense ID, otherwise adjust the URL accordingly
                     $.get('/payment/' + unit, function(data) {
-                        paymentInput.val(data.price); // Assuming the response contains a "price" property
+                        paymentInput.val(data
+                            .price); // Assuming the response contains a "price" property
                     });
                 }
             });
@@ -328,9 +349,7 @@
                             $('#expense_price').val(expense.price);
                         });
                 });
-
             })
-
         })
     </script>
 @endpush

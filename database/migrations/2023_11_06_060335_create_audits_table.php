@@ -28,6 +28,8 @@ class CreateAuditsTable extends Migration
             $table->text('old_values')->nullable();
             $table->text('new_values')->nullable();
             $table->text('url')->nullable();
+            $table->double('lived_in_id')->nullable();
+            $table->double('expense_id')->nullable();
             $table->ipAddress('ip_address')->nullable();
             $table->string('user_agent', 1023)->nullable();
             $table->string('tags')->nullable();

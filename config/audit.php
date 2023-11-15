@@ -1,5 +1,6 @@
 <?php
 
+
 return [
 
     'enabled' => env('AUDITING_ENABLED', true),
@@ -42,6 +43,8 @@ return [
     |
     */
     'resolvers' => [
+        'lived_in_id' => \App\AuditResolvers\LivedInIdResolver::class,
+        'expense_id' => \App\AuditResolvers\ExpenseIdResolver::class,
         'ip_address' => OwenIt\Auditing\Resolvers\IpAddressResolver::class,
         'user_agent' => OwenIt\Auditing\Resolvers\UserAgentResolver::class,
         'url'        => OwenIt\Auditing\Resolvers\UrlResolver::class,
@@ -57,10 +60,7 @@ return [
     */
 
     'events' => [
-        'created',
         'updated',
-        'deleted',
-        'restored'
     ],
 
     /*

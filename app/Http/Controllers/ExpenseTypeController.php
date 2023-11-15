@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\AuditingDataTable;
 use App\Models\Expense;
 use App\Models\LivedIn;
 use Illuminate\Http\Request;
@@ -17,9 +18,16 @@ class ExpenseTypeController extends Controller
      */
     public function index(Request $request, $id)
     {
-        $dataTable = new ExpenseTypeDataTable($id);
+        // Create instances of the DataTables
+        $expenseDataTable = new ExpenseTypeDataTable($id);
+        $auditDataTable = new AuditingDataTable($id);
 
-        return $dataTable->render('expenseType.index', compact('id'));
+        // Use the DataTables HTML builders
+        $expenseTableHtml = $expenseDataTable->html();
+        $auditTableHtml = $auditDataTable->html();
+
+        // Pass the HTML builders to the view
+        return view('expenseType.index', compact('expenseTableHtml', 'auditTableHtml'));
     }
 
     /**
