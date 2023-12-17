@@ -25,7 +25,6 @@ class StoreApartmentRequest extends FormRequest
             'name'=> ['required', 'string'],
             'address' => ['required'] ,
             'base_price' => ['required', 'numeric'],
-            'description' => ['required', 'string', 'max:255'],
             'security_deposit' => ['required', 'numeric'],
             'picture' => ['required', 'mimes:jpeg,bmp,png'],
         ];

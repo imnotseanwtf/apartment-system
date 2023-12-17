@@ -31,7 +31,7 @@ class ResetMonthlyRent extends Command
         // Retrieve all LivedIn records
         $livedIns = LivedIn::with('unit')->get();
 
-        // Define today's date using the same format as your database
+        // Define today's date using the same format as your database2
         $today = Carbon::today()->format('Y-m-d');
 
         foreach ($livedIns as $livedIn) {

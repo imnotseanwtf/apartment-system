@@ -11,6 +11,7 @@ use App\Http\Controllers\MovedInController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ApartmentController;
 use App\Http\Controllers\ExpenseTypeController;
+use App\Http\Controllers\TransactionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,7 +61,6 @@ Route::middleware('auth')->group(function () {
     // LIVED IN
 
     Route::get('payment/{unitPrice}', function ($expensePrice) {
-
         $price = Expense::find($expensePrice);
 
         return response()->json($price);
@@ -72,6 +72,10 @@ Route::middleware('auth')->group(function () {
 
     // AUDIT
 
-    Route::post('payment/store', [PaymentController::class , 'store'])->name('payment.store');
+    Route::post('payment/store', [PaymentController::class, 'store'])->name('payment.store');
+
+    // Trasaction History
+
+    Route::get('expense/{id}/history', [TransactionController::class, 'index'])->name('transaction.index');
 
 });

@@ -24,6 +24,7 @@ class LivedInFactory extends Factory
             'apartment_id' => Apartment::inRandomOrder()->value('id'),
             'unit_id' => Unit::inRandomOrder()->value('id'),
             'start_date' => fake()->date(),
+            'end_date' => fake()->date(),
         ];
     }
 }

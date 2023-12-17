@@ -24,5 +24,9 @@
         <a href="{{ route('expenses.index', $tenant->livedIn->id) }}" class="btn btn-success">
             <i class="fa-solid fa-money-bill"></i>
         </a>
+        @else
+        <a href="{{ route('apartment.index') }}" class="btn btn-success">
+            <i class="fa-solid fa-plus"></i>
+        </a>
     @endif
 </div>

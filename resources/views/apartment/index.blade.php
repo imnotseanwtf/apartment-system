@@ -1,11 +1,10 @@
 @extends('layouts.app')
 
-
 @section('content')
     <div class="container-fluid">
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Apartment</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('apartment.index') }}">Apartment</a></li>
             </ol>
         </nav>
 
@@ -93,17 +92,6 @@
                                         autofocus>
                                 </div>
                                 @error('security_deposit')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <div class="form-group mt-3 mb-3">
-                                <label for="name">{{ __('Description') }}</label>
-                                <div class="input-group">
-                                    <textarea name="description" class="form-control" type="text" @class(['form-control', 'is-invalid' => $errors->has('description')])
-                                        placeholder="{{ __('Description') }}" autofocus>{{ old('description') }}</textarea>
-                                </div>
-                                @error('description')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>

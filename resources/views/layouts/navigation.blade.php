@@ -1,11 +1,16 @@
 <ul class="nav flex-column pt-3 pt-md-0">
     <li class="nav-item">
         <a href="{{ route('home') }}" class="nav-link d-flex align-items-center">
-            <span class="sidebar-icon me-3">
-                <img src="{{ asset('images/brand/light.svg') }}" height="20" width="20" alt="Volt Logo">
-            </span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home-2" width="24"
+                height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
+                <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+                <path d="M10 12h4v4h-4z" />
+            </svg>
             <span class="mt-1 ms-1 sidebar-text">
-                Volt Laravel
+                Apartment System
             </span>
         </a>
     </li>
@@ -20,15 +25,6 @@
                 </svg>
             </span>
             <span class="sidebar-text">{{ __('Dashboard') }}</span>
-        </a>
-    </li>
-
-    <li class="nav-item {{ request()->routeIs('users.index') ? 'active' : '' }}">
-        <a href="{{ route('users.index') }}" class="nav-link">
-            <span class="sidebar-icon me-3">
-                <i class="fas fa-user-alt fa-fw"></i>
-            </span>
-            <span class="sidebar-text">{{ __('Users') }}</span>
         </a>
     </li>
 

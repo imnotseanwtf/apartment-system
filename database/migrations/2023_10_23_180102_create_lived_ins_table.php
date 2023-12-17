@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->foreignIdFor(Apartment::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Unit::class)->constrained()->cascadeOnDelete();
             $table->dateTime('start_date');
+            $table->dateTime('end_date');
             $table->timestamps();
         });
     }

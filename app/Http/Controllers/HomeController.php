@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Unit;
+use App\Models\Tenant;
+use App\Models\LivedIn;
+use App\Models\Payment;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +27,22 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $livedInCount = LivedIn::count();
+
+        $unitCount = Unit::count();
+
+        $tenantCount = Tenant::count();
+
+        $unitSales = Unit::doesntHave('livedIn')->count();
+
+        $livedIn = LivedIn::selectRaw('DATE(start_date) as date, COUNT(*) as lived_in_count')
+            ->groupBy('date')
+            ->get();
+
+        $profit = Payment::selectRaw('DATE(created_at) as date, SUM(amount) as profit_count')
+            ->groupBy('date')
+            ->get();
+
+        return view('home', compact('livedIn', 'profit', 'livedInCount', 'unitCount', 'tenantCount', 'unitSales'));
     }
 }

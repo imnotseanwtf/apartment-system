@@ -4,8 +4,10 @@ namespace App\DataTables;
 
 use App\Models\Audit;
 use App\Models\Expense;
+use App\Models\Payment;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
+use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
@@ -23,8 +25,48 @@ class AuditingDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'auditing.action')
-            ->setRowId('id');
+            ->setRowId('id')
+            ->addColumn('user', function (Audit $audit) {
+                return optional($audit->user)->name;
+            })
+            ->addColumn('bills', function (Audit $audit) {
+                // Manually load the Expense model using the auditable_id
+                $expense = Expense::find($audit->auditable_id);
+                if ($expense) {
+                    return $expense->bills ?? 'N/A';
+                } else {
+                    return 'N/A - Expense not found';
+                }
+            })
+            ->editColumn('old_amount', function (Audit $audit) {
+                return $this->simplifyJson($audit->old_values);
+            })
+            ->addColumn('amount', function (Audit $audit) {
+                // Manually load the Payment model using the auditable_id
+                $payment = Payment::where('expense_id', $audit->auditable_id)->first();
+                return $payment ? $payment->amount : 'N/A';
+            })
+            ->editColumn('new_price', function (Audit $audit) {
+                return $this->simplifyJson($audit->new_values);
+            })
+            ->addColumn('pay_at', function (Audit $audit) {
+                return $audit->created_at->format('F j Y g:ia');
+            })
+            ->rawColumns(['old_amount', 'new_price']);
+    }
+
+    protected function simplifyJson($jsonString)
+    {
+        $json = json_decode($jsonString, true);
+        if (json_last_error() === JSON_ERROR_NONE) {
+            // Convert associative array to string "key: value" format
+            return collect($json)
+                ->map(function ($value, $key) {
+                    return "$value";
+                })
+                ->implode(', ');
+        }
+        return $jsonString; // Return original string if not a valid JSON
     }
 
     private $id;
@@ -38,7 +80,8 @@ class AuditingDataTable extends DataTable
     {
         return $model
             ->newQuery()
-            ->where('lived_in_id', $this->id);
+            ->where('lived_in_id', $this->id)
+            ->with('auditable');
     }
 
     /**
@@ -47,20 +90,13 @@ class AuditingDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('auditing-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    //->dom('Bfrtip')
-                    ->orderBy(1)
-                    ->selectStyleSingle()
-                    ->buttons([
-                        Button::make('excel'),
-                        Button::make('csv'),
-                        Button::make('pdf'),
-                        Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload')
-                    ]);
+            ->setTableId('auditing-table')
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            //->dom('Bfrtip')
+            ->orderBy(1)
+            ->selectStyleSingle()
+            ->buttons([Button::make('excel'), Button::make('csv'), Button::make('pdf'), Button::make('print'), Button::make('reset'), Button::make('reload')]);
     }
 
     /**
@@ -68,17 +104,7 @@ class AuditingDataTable extends DataTable
      */
     public function getColumns(): array
     {
-        return [
-            Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
-            Column::make('id'),
-            Column::make('add your columns'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
-        ];
+        return [Column::make('user'), Column::make('bills'), Column::make('old_amount'), Column::make('amount'), Column::make('new_price'), Column::make('pay_at')];
     }
 
     /**

@@ -72,12 +72,12 @@ class UnitDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('name'),
-            Column::make('monthly_rent'),
-            Column::make('security_deposit'),
-            Column::make('advance_electricity'),
-            Column::make('advance_water'),
-            Column::make('status'),
+            Column::make('name')->addClass('text-center'),
+            Column::make('monthly_rent')->addClass('text-center'),
+            Column::make('security_deposit')->addClass('text-center'),
+            Column::make('advance_electricity')->addClass('text-center'),
+            Column::make('advance_water')->addClass('text-center'),
+            Column::make('status')->addClass('text-center'),
             Column::make('actions')
                 ->searchable(false)
                 ->printable(false)

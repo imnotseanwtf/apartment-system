@@ -4,8 +4,8 @@
     <div class="container-fluid">
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Tenants</a></li>
-                <li class="breadcrumb-item"><a href="#">Expenses</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('tenant.index') }}">Tenants</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('expenses.index', $id) }}">Expenses</a></li>
             </ol>
         </nav>
 
@@ -13,8 +13,7 @@
             <div class="card-header d-flex justify-content-between align-items-center">
                 <div>Expenses</div>
                 <div>
-                    <button type="button" class="btn btn-primary historyBtn" data-bs-toggle="modal"
-                        data-bs-target="#transactionModal">Transaction History</button>
+                    <a class="btn btn-primary" href="{{ route('transaction.index', $id) }}">Transaction History</a>
                     <button type="button" class="btn btn-success addBillBtn" data-bs-toggle="modal"
                         data-bs-target="#plusModal">Add Expenses</button>
                 </div>
@@ -254,29 +253,6 @@
                         </div>
                     </div>
                 </form>
-            </div>
-        </div>
-
-        {{-- TRANSACTION HISTORY MODAL --}}
-
-        <div class="modal fade" id="transactionModal" tabindex="-1" role="dialog"
-            aria-labelledby="transactionPromoModal" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Transaction History</h5>
-                        <button type="button" data-bs-dismiss="modal" aria-label="Close" class="btn">
-                            <i class="fa-solid fa-xmark"></i>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-
-
-                    </div>
-                    <div class="modal-footer mt-2">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

@@ -16,26 +16,11 @@ class ExpenseTypeController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request, $id)
+    public function index($id)
     {
-        // Create instances of the DataTables
-        $expenseDataTable = new ExpenseTypeDataTable($id);
-        $auditDataTable = new AuditingDataTable($id);
+        $dataTable = new ExpenseTypeDataTable($id);
 
-        // Use the DataTables HTML builders
-        $expenseTableHtml = $expenseDataTable->html();
-        $auditTableHtml = $auditDataTable->html();
-
-        // Pass the HTML builders to the view
-        return view('expenseType.index', compact('expenseTableHtml', 'auditTableHtml'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return $dataTable->render('expenseType.index', compact('id'));
     }
 
     /**

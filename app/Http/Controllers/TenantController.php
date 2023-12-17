@@ -19,16 +19,16 @@ class TenantController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(TenantDataTable $tenantDataTable): JsonResponse | View
+    public function index(TenantDataTable $tenantDataTable): JsonResponse|View
     {
         $livedIns = LivedIn::with('apartment')->get();
 
         return $tenantDataTable->render('tenant.index', compact('livedIns'));
     }
 
-    public function showAllTenant(): JsonResponse | View
+    public function showAllTenant(): JsonResponse|View
     {
-        $tenants = Tenant::all();  // Assuming you have a Tenant model
+        $tenants = Tenant::all(); // Assuming you have a Tenant model
 
         return response()->json($tenants);
     }
@@ -38,13 +38,14 @@ class TenantController extends Controller
      */
     public function store(StoreTenantRequest $request)
     {
-        Tenant::create($request->except('picture') + [
-            'picture' => $request->file('picture')->store('avatars', 'public')
-        ]);
+        Tenant::create(
+            $request->except('picture') + [
+                'picture' => $request->file('picture')->store('avatars', 'public'),
+            ],
+        );
 
         alert()->success('Tenant created successfully.');
         return redirect()->route('tenant.index');
-
     }
 
     /**
@@ -56,21 +57,19 @@ class TenantController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.d
-     */
-
-    /**
      * Update the specified resource in storage.
      */
     public function update(UpdateTenantRequest $request, Tenant $tenant): RedirectResponse
     {
         if ($request->hasFile('picture')) {
-            unlink(storage_path('app/public/'. $tenant->picture));
+            unlink(storage_path('app/public/' . $tenant->picture));
         }
 
-        $tenant->update($request->except('picture') + [
-            'picture' => $request->hasFile('picture') ? $request->file('picture')->store('avatars', 'public') : $tenant->picture,
-        ]);
+        $tenant->update(
+            $request->except('picture') + [
+                'picture' => $request->hasFile('picture') ? $request->file('picture')->store('avatars', 'public') : $tenant->picture,
+            ],
+        );
 
         alert()->success('Tenant updated successfully.');
         return redirect()->route('tenant.index');

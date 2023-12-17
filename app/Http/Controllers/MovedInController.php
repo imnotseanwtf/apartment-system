@@ -27,7 +27,20 @@ class MovedInController extends Controller
         ]);
 
         // Create additional one-time expenses
-        $oneTimeExpensesData = [['bills' => 'Security Deposit', 'price' => $unit->security_deposit], ['bills' => 'Advance Electricity', 'price' => $unit->advance_electricity], ['bills' => 'Advance Water', 'price' => $unit->advance_water]];
+        $oneTimeExpensesData = [
+            [
+                'bills' => 'Security Deposit',
+                'price' => $unit->security_deposit,
+            ],
+            [
+                'bills' => 'Advance Electricity',
+                'price' => $unit->advance_electricity,
+            ],
+            [
+                'bills' => 'Advance Water',
+                'price' => $unit->advance_water,
+            ],
+        ];
 
         foreach ($oneTimeExpensesData as $expenseData) {
             $livedIn->expenses()->create($expenseData);

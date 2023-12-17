@@ -18,6 +18,8 @@
                 <div class="card card-body border-0 shadow table-wrapper table-responsive">
                     {{ $dataTable->table() }}
                 </div>
+                <div class="card-footer">
+                </div>
             </div>
         </div>
 

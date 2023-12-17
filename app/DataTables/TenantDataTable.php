@@ -84,11 +84,10 @@ class TenantDataTable extends DataTable
     {
         return [
             Column::make('picture'),
-            Column::make('name'),
-            Column::make('occupation'),
-            Column::make('number'),
-            Column::make('lived_in.apartment.name', 'livedIn.apartment.name'),
-            Column::make('lived_in.unit.name', 'livedIn.unit.name'),
+            Column::make('name')->addClass('text-center'),
+            Column::make('number')->addClass('text-center'),
+            Column::make('lived_in.apartment.name', 'livedIn.apartment.name')->addClass('text-center'),
+            Column::make('lived_in.unit.name', 'livedIn.unit.name')->addClass('text-center'),
             Column::make('balance')->addClass('text-center'),
             Column::make('actions')
                 ->searchable(false)
