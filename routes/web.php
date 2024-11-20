@@ -30,52 +30,51 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
 Route::middleware('auth')->group(function () {
+    // ADMIN MIDDLEWARE
+    Route::middleware('role:admin')->group(function () {
+        // ADMIN DASHBOARD
+        Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('dashboard');
+
+        // UNIT
+        Route::resource('unit', UnitController::class)->except('index');
+        Route::get('unit/{id}/units', [UnitController::class, 'index'])->name('unit.index');
+
+        // RESOURCES
+        Route::resources(
+            [
+                'apartment' => ApartmentController::class,
+                'tenant' => TenantController::class,
+                'expenses' => ExpenseTypeController::class,
+            ],
+            ['except' => ['create', 'edit']],
+        );
+
+        // MOVED IN
+        Route::post('/apartment/{unit}/moved-in', MovedInController::class)->name('apartment.movedIn');
+
+        // LIVED IN
+        Route::get('payment/{unitPrice}', function ($expensePrice) {
+            $price = Expense::find($expensePrice);
+
+            return response()->json($price);
+        });
+
+        // EXPENSE
+        Route::get('expense/{id}/expenses', [ExpenseTypeController::class, 'index'])->name('expenses.index');
+
+        // AUDIT
+        Route::post('payment/store', [PaymentController::class, 'store'])->name('payment.store');
+
+        // Trasaction History
+        Route::get('expense/{id}/history', [TransactionController::class, 'index'])->name('transaction.index');
+    });
+
+    // Home
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
     Route::view('about', 'about')->name('about');
     Route::get('users', [\App\Http\Controllers\UserController::class, 'index'])->name('users.index');
     Route::get('profile', [\App\Http\Controllers\ProfileController::class, 'show'])->name('profile.show');
     Route::put('profile', [\App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
-
-    // UNIT
-
-    Route::resource('unit', UnitController::class)->except('index');
-    Route::get('unit/{id}/units', [UnitController::class, 'index'])->name('unit.index');
-
-    // RESOURCES
-
-    Route::resources(
-        [
-            'apartment' => ApartmentController::class,
-            'tenant' => TenantController::class,
-            'expenses' => ExpenseTypeController::class,
-        ],
-        ['except' => ['create', 'edit']],
-    );
-
-    // MOVED IN
-
-    Route::post('/apartment/{unit}/moved-in', MovedInController::class)->name('apartment.movedIn');
-
-    // LIVED IN
-
-    Route::get('payment/{unitPrice}', function ($expensePrice) {
-        $price = Expense::find($expensePrice);
-
-        return response()->json($price);
-    });
-
-    // EXPENSE
-
-    Route::get('expense/{id}/expenses', [ExpenseTypeController::class, 'index'])->name('expenses.index');
-
-    // AUDIT
-
-    Route::post('payment/store', [PaymentController::class, 'store'])->name('payment.store');
-
-    // Trasaction History
-
-    Route::get('expense/{id}/history', [TransactionController::class, 'index'])->name('transaction.index');
-
 });

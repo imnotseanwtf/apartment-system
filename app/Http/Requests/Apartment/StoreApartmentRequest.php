@@ -22,10 +22,8 @@ class StoreApartmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'=> ['required', 'string'],
-            'address' => ['required'] ,
-            'base_price' => ['required', 'numeric'],
-            'security_deposit' => ['required', 'numeric'],
+            'name' => ['required', 'string'],
+            'address' => ['required'],
             'picture' => ['required', 'mimes:jpeg,bmp,png'],
         ];
     }

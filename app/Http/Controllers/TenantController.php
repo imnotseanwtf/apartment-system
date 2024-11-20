@@ -11,7 +11,6 @@ use App\Http\Requests\Tenant\StoreTenantRequest;
 use App\Http\Requests\Tenant\UpdateTenantRequest;
 use App\Models\Tenant;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Redis;
 use Illuminate\View\View;
 
 class TenantController extends Controller

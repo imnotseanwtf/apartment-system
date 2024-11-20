@@ -25,10 +25,10 @@ class TenantDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->setRowId('id')
-            ->addColumn('picture', fn(Tenant $tenant) => '<img src="storage/' . $tenant->picture . '" height="50" width="50"/>')
-            ->addColumn('actions', fn(Tenant $tenant) => view('tenant.components.action', compact('tenant')))
-            ->editColumn('lived_in.apartment.name', fn(Tenant $tenant) => $tenant->livedIn?->apartment?->name ?? 'No Occupied Apartment')
-            ->editColumn('lived_in.unit.name', fn(Tenant $tenant) => $tenant->livedIn?->unit?->name ?? 'No Occupied Unit')
+            ->addColumn('picture', fn (Tenant $tenant) => '<img src="storage/' . $tenant->picture . '" height="50" width="50"/>')
+            ->addColumn('actions', fn (Tenant $tenant) => view('tenant.components.action', compact('tenant')))
+            ->editColumn('lived_in.apartment.name', fn (Tenant $tenant) => $tenant->livedIn?->apartment?->name ?? 'No Occupied Apartment')
+            ->editColumn('lived_in.unit.name', fn (Tenant $tenant) => $tenant->livedIn?->unit?->name ?? 'No Occupied Unit')
             ->addColumn('balance', function (Tenant $tenant) {
                 $totalExpense = Expense::whereHas('livedIn', function ($query) use ($tenant) {
                     $query->where('tenant_id', $tenant->id);

@@ -27,6 +27,11 @@ class HomeController extends Controller
      */
     public function index()
     {
+        return view('home');
+    }
+
+    public function dashboard()
+    {
         $livedInCount = LivedIn::count();
 
         $unitCount = Unit::count();
@@ -35,14 +40,10 @@ class HomeController extends Controller
 
         $unitSales = Unit::doesntHave('livedIn')->count();
 
-        $livedIn = LivedIn::selectRaw('DATE(start_date) as date, COUNT(*) as lived_in_count')
-            ->groupBy('date')
-            ->get();
+        $livedIn = LivedIn::selectRaw('DATE(start_date) as date, COUNT(*) as lived_in_count')->groupBy('date')->get();
 
-        $profit = Payment::selectRaw('DATE(created_at) as date, SUM(amount) as profit_count')
-            ->groupBy('date')
-            ->get();
+        $profit = Payment::selectRaw('DATE(created_at) as date, SUM(amount) as profit_count')->groupBy('date')->get();
 
-        return view('home', compact('livedIn', 'profit', 'livedInCount', 'unitCount', 'tenantCount', 'unitSales'));
+        return view('dashboard', compact('livedIn', 'profit', 'livedInCount', 'unitCount', 'tenantCount', 'unitSales'));
     }
 }

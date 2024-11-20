@@ -70,32 +70,6 @@
                                 @enderror
                             </div>
 
-                            <div class="form-group mt-3">
-                                <label for="name">{{ __('Base Price') }}</label>
-                                <div class="input-group">
-                                    <input name="base_price" type="number" @class(['form-control', 'is-invalid' => $errors->has('base_price')])
-                                        placeholder="{{ __('Base Price') }}" value="{{ old('base_price') }}" autofocus>
-                                </div>
-                                @error('base_price')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <div class="form-group mt-3">
-                                <label for="name">{{ __('Security Deposit') }}</label>
-                                <div class="input-group">
-                                    <input name="security_deposit" type="number" @class([
-                                        'form-control',
-                                        'is-invalid' => $errors->has('security_deposit'),
-                                    ])
-                                        placeholder="{{ __('Security Deposit') }}" value="{{ old('security_deposit') }}"
-                                        autofocus>
-                                </div>
-                                @error('security_deposit')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                 <button type="submit" class="btn btn-primary">Save</button>
@@ -128,42 +102,11 @@
                             </div>
                         </div>
 
-                        {{-- <div class="row mt-3">
-                            <label for="view_icon" class="col-12">{{ __('Icon') }}</label>
-                            <img id="view_icon" alt="apartment_icon" src="">
-                        </div> --}}
-
                         <div class="form-group mt-3">
                             <label for="name">{{ __('Address') }}</label>
                             <div class="input-group">
                                 <input name="address" type="text" id="view_address" @class(['form-control'])
                                     placeholder="{{ __('Address') }}" value="{{ old('address') }}" readonly>
-                            </div>
-                        </div>
-
-                        <div class="form-group mt-3">
-                            <label for="name">{{ __('Base Price') }}</label>
-                            <div class="input-group">
-                                <input name="base_price" type="text" id="view_price" @class(['form-control'])
-                                    placeholder="{{ __('Base Price') }}" value="{{ old('base_price') }}" readonly>
-                            </div>
-                        </div>
-
-                        <div class="form-group mt-3">
-                            <label for="name">{{ __('Security Deposit') }}</label>
-                            <div class="input-group">
-                                <input name="base_price" type="text" id="view_security_deposit"
-                                    @class(['form-control']) placeholder="{{ __('Security Deposit') }}"
-                                    value="{{ old('security_deposit') }}" readonly>
-                            </div>
-                        </div>
-
-                        <div class="form-group mt-3 mb-3">
-                            <label for="name">{{ __('Description') }}</label>
-                            <div class="input-group">
-                                <input name="description" type="text" id="view_description"
-                                    @class(['form-control']) placeholder="{{ __('Description') }}"
-                                    value="{{ old('description') }}" readonly>
                             </div>
                         </div>
 
@@ -319,9 +262,6 @@
                         .then(apartment => {
                             console.log(apartment)
                             $('#view_name').val(apartment.name)
-                            $('#view_price').val(apartment.base_price)
-                            $('#view_security_deposit').val(apartment.security_deposit);
-                            $('#view_description').val(apartment.description)
                             $('#view_address').val(apartment.address)
                         })
                 })
@@ -331,9 +271,6 @@
                         .then(response => response.json())
                         .then(apartment => {
                             $('#edit_name').val(apartment.name)
-                            $('#edit_price').val(apartment.base_price)
-                            $('#edit_security_deposit').val(apartment.security_deposit);
-                            $('#edit_description').val(apartment.description)
                             $('#edit_address').val(apartment.address)
                             $('#update-form').attr('action', '/apartment/' + $(this).data(
                                 'apartment'));
@@ -343,11 +280,6 @@
                 $('.deleteBtn').click(function() {
                     $('#delete-form').attr('action', '/apartment/' + $(this).data('apartment'));
                 });
-
-                // $('.addTenantBtn').click(function() {
-                //     $('#addTenantForm').attr('action', '/apartment/' + $(this).data('apartment') +
-                //         '/moved-in');
-                // })
 
             })
         })

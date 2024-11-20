@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Role;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class UserSeeder extends Seeder
@@ -13,6 +14,11 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(5)->create();
+        foreach (Role::all() as $role) {
+            $users = User::factory(10)->create();
+            foreach ($users as $user) {
+                $user->assignRole($role);
+            }
+        }
     }
 }

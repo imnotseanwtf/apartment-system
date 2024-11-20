@@ -25,8 +25,8 @@ class ExpenseTypeDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->setRowId('id')
-            ->addColumn('payment_status', fn(Expense $expense) => $expense->price == 0 ? '<i class="fas fa-check-circle fa-2x text-success"></i>' : '<i class="fas fa-times-circle fa-2x text-danger"></i>')
-            ->addColumn('action', fn(Expense $expense) => view('expenseType.components.action', compact('expense')))
+            ->addColumn('payment_status', fn (Expense $expense) => $expense->price == 0 ? '<i class="fas fa-check-circle fa-2x text-success"></i>' : '<i class="fas fa-times-circle fa-2x text-danger"></i>')
+            ->addColumn('action', fn (Expense $expense) => view('expenseType.components.action', compact('expense')))
             ->rawColumns(['action', 'payment_status']);
     }
 

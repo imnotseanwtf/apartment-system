@@ -1,11 +1,17 @@
 <nav class="navbar navbar-top navbar-expand navbar-dashboard navbar-dark ps-0 pe-2 pb-0">
-    <div class="container-fluid px-0">
-        <div class="d-flex justify-content-end w-100" id="navbarSupportedContent">
+    <div class="container-fluid"> <!-- Changed from "container" to "container-fluid" to allow the search bar to take full width -->
+        <form class="d-flex w-100"> <!-- Added "w-100" class to make the form take full width -->
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="width: 100%;"> <!-- Kept the inline style for width to ensure it takes full available width -->
+            <button class="btn btn-outline-success" type="submit"><i class="fas fa-search"></i></button>
+        </form>
+    </div>
+    <div class="container-fluid px-0"> <!-- Ensured this div also uses "container-fluid" for consistency and full width utilization -->
+        <div class="d-flex justify-content-end w-100 mt-3" id="navbarSupportedContent"> <!-- Ensured full width with "w-100" -->
             <!-- Navbar links -->
             <ul class="navbar-nav align-items-center">
                 <li class="nav-item dropdown ms-lg-3">
-                    <a class="nav-link dropdown-toggle pt-1 px-0" href="#" role="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
+                    <a class="nav-link dropdown-toggle pt-1 px-0" href="#" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
                         <div class="media d-flex align-items-center">
                             <img class="avatar rounded-circle"
                                 src="https://ui-avatars.com/api/?background=random&name={{ Auth::user()->name }}"
@@ -27,7 +33,8 @@
                             {{ __('My Profile') }}
                         </a>
                         <div role="separator" class="dropdown-divider my-1"></div>
-                        <a class="dropdown-item d-flex align-items-center" href="{{ route('logout') }}" onclick="event.preventDefault();
+                        <a class="dropdown-item d-flex align-items-center" href="{{ route('logout') }}"
+                            onclick="event.preventDefault();
                         document.getElementById('logout-form').submit();">
                             <form method="POST" id="logout-form" action="{{ route('logout') }}">
                                 @csrf
@@ -46,3 +53,5 @@
         </div>
     </div>
 </nav>
+
+
